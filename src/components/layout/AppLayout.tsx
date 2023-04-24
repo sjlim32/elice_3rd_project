@@ -1,4 +1,4 @@
-import Header from '../common/Header';
+import Header from '../common/Header'
 
 const AppLayout = (props: { children: React.ReactNode }) => {
   return (
@@ -6,7 +6,7 @@ const AppLayout = (props: { children: React.ReactNode }) => {
       <Header />
       {props.children}
     </>
-  );
-};
+  )
+}
 
-export default AppLayout;
+export default AppLayout

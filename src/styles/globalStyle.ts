@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components';
-import reset from 'styled-reset';
+import { createGlobalStyle } from 'styled-components'
+import reset from 'styled-reset'
 
 export const GlobalStyle = createGlobalStyle`
 ${reset};
@@ -43,4 +43,4 @@ ${reset};
     padding: 0;
     cursor: pointer;
   }
-`;
+`

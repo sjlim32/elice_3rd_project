@@ -1,14 +1,16 @@
-import { HeaderWrapper } from './header-styled';
-import Link from 'next/link';
+import { HeaderWrapper, Nav } from './header-styled'
+import Link from 'next/link'
 
 const Header = () => {
   return (
     <HeaderWrapper>
-      <div>
+      <Nav>
         <Link href={'/'}>HEADER</Link>
-      </div>
+        <Link href={'/'}>Login</Link>
+        <Link href={'/'}>Join</Link>
+      </Nav>
     </HeaderWrapper>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
