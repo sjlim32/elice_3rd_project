@@ -9,10 +9,6 @@ const Main = () => {
     router.push('/recoil-test');
   };
 
-  const goToMyUserPage = () => {
-    router.push('/my-userpage');
-  }
-
   return (
     <MainWrapper>
       <h1>main page</h1>
