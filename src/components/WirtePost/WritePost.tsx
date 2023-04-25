@@ -5,17 +5,22 @@ import {
   SubmitButtonContainer,
   InputsContainer,
   SummaryWrapper,
+  TitleInput,
+  ContentTextArea,
+  SummaryTextArea,
+  SubmitButton,
+  DeleteButton,
 } from './write-post-styled';
 import { useRouter } from 'next/router';
 
 interface Props {
-  isEdit: Boolean;
+  isEdit?: Boolean;
 }
 
 const WritePost = ({ isEdit }: Props) => {
   const titleRef = useRef<HTMLInputElement>(null);
-  const contentRef = useRef<HTMLInputElement>(null);
-  const summaryRef = useRef<HTMLInputElement>(null);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
+  const summaryRef = useRef<HTMLTextAreaElement>(null);
 
   const router = useRouter();
 
@@ -24,18 +29,12 @@ const WritePost = ({ isEdit }: Props) => {
     if (router.isReady && isEdit) {
       const { id } = router.query;
       console.log('id', id);
-      titleRef.current.value = '수정 타이틀' + id;
-      contentRef.current.value = '수정 내용' + id;
-      summaryRef.current.value = '수정 요약' + id;
-    }
-  }, [router]);
 
-  // useEffect(() => {
-  //   if (router.isReady) {
-  //     const { id } = router.query;
-  //     console.log('id', id);
-  //   }
-  // }, [router]);
+      titleRef.current && (titleRef.current.value = '수정 타이틀' + id);
+      contentRef.current && (contentRef.current.value = '수정 내용' + id);
+      summaryRef.current && (summaryRef.current.value = '수정 요약' + id);
+    }
+  }, [router, isEdit]);
 
   const handleSubmit = () => {
     if (!titleRef.current?.value) {
@@ -57,33 +56,61 @@ const WritePost = ({ isEdit }: Props) => {
   };
 
   const getSummary = () => {
-    const summary = '요약';
-    if (summaryRef.current) summaryRef.current.value = summary;
+    const random = Math.random();
+    const summary = '요약이다아아아아 + 랜덤숫자 ' + random;
+
+    if (summaryRef.current && summaryRef.current.value) {
+      if (
+        window.confirm(
+          `입력한 내용은 모두 사라집니다. 요약 추천을 받으시겠습니까?`
+        )
+      ) {
+        summaryRef.current.value = summary;
+      }
+    } else {
+      summaryRef.current && (summaryRef.current.value = summary);
+    }
   };
 
   return (
     <WritePostContainer>
       <WriteFormContainer>
         <SubmitButtonContainer>
-          <span onClick={handleSubmit}>저장</span>
-          <span onClick={handleDelete}>삭제</span>
+          {isEdit ? (
+            <SubmitButton type="button" onClick={handleSubmit}>
+              완료
+            </SubmitButton>
+          ) : (
+            <SubmitButton type="button" onClick={handleSubmit}>
+              저장
+            </SubmitButton>
+          )}
+
+          <DeleteButton type="button" onClick={handleDelete}>
+            삭제
+          </DeleteButton>
         </SubmitButtonContainer>
         <InputsContainer>
-          <input
+          <TitleInput
             name="title"
             placeholder="제목을 입력하세요"
             type="text"
             ref={titleRef}
           />
-          <input
+          <ContentTextArea
             name="content"
             placeholder="내용을 입력하세요"
-            type="text"
             ref={contentRef}
           />
           <SummaryWrapper>
-            <span onClick={getSummary}>요약하기</span>
-            <input name="summary" type="text" ref={summaryRef} />
+            <button type="button" onClick={getSummary}>
+              요약 추천
+            </button>
+            <SummaryTextArea
+              name="summary"
+              placeholder="요약 추천 또는 직접 입력"
+              ref={summaryRef}
+            />
           </SummaryWrapper>
         </InputsContainer>
       </WriteFormContainer>
