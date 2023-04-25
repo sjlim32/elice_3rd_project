@@ -3,5 +3,5 @@
   "endOfLine": "auto",
   "arrowParens": "avoid",
   "singleQuote": true,
-  "semi": false
+  "semi": true
 }
