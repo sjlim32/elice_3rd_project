@@ -1,13 +1,13 @@
-import { useRouter } from 'next/router';
-import Link from 'next/link';
-import { MainWrapper } from './main-styled';
+import { useRouter } from 'next/router'
+import Link from 'next/link'
+import { MainWrapper } from './main-styled'
 
 const Main = () => {
-  const router = useRouter();
+  const router = useRouter()
 
   const goToRecoilTeset = () => {
-    router.push('/recoil-test');
-  };
+    router.push('/recoil-test')
+  }
 
   return (
     <MainWrapper>
@@ -15,7 +15,7 @@ const Main = () => {
       <button onClick={goToRecoilTeset}>go to recoil-test page</button>
       <Link href={'/signup'}>go to signup page</Link>
     </MainWrapper>
-  );
-};
+  )
+}
 
-export default Main;
+export default Main
