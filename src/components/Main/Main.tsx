@@ -9,10 +9,15 @@ const Main = () => {
     router.push('/recoil-test');
   };
 
+  const goToMyUserPage = () => {
+    router.push('/my-userpage');
+  }
+
   return (
     <MainWrapper>
       <h1>main page</h1>
       <button onClick={goToRecoilTeset}>go to recoil-test page</button>
+      <button onClick={goToMyUserPage}>go to my page</button>
       <Link href={'/signup'}>go to signup page</Link>
     </MainWrapper>
   );
