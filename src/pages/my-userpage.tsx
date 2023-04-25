@@ -1,10 +1,10 @@
-import MyPage from '../components/MyUser/MyUser';
+import MyUser from '../components/MyUser/MyUser';
 
 const MyUserPage = () => {
   return (
     <>
       <div>MyPage</div>
-      <MyPage />
+      <MyUser />
     </>
   );
 };

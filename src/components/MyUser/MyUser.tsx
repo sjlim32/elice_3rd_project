@@ -2,7 +2,7 @@ import { useRecoilState } from 'recoil';
 import { testState } from '@/store/test';
 import { ChangeEvent } from 'react';
 
-function MyUser () {
+const MyUser = () => {
   const [test, setTest] = useRecoilState(testState);
 
   const testRecoil = (e: ChangeEvent<HTMLInputElement>) => {
