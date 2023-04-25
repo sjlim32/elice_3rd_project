@@ -1,13 +1,14 @@
-import { HeaderWrapper, Nav } from './header-styled'
+import { HeaderWrapper, LinkWrapper, Nav } from './header-styled'
 import Link from 'next/link'
 
 const Header = () => {
+
   return (
-    <HeaderWrapper>
+    <HeaderWrapper>      
       <Nav>
-        <Link href={'/'}>HEADER</Link>
-        <Link href={'/'}>Login</Link>
-        <Link href={'/'}>Join</Link>
+        <LinkWrapper href={'/'}>HEADER</LinkWrapper>
+        <LinkWrapper href={'/'}>Login</LinkWrapper>
+        <LinkWrapper href={'/'}>Join</LinkWrapper>
       </Nav>
     </HeaderWrapper>
   )
