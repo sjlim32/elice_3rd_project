@@ -26,7 +26,7 @@ const postsList: any[] = [{
 	"createdAt": "2023-04-25T03:10:52.668Z"
 }]
 
-const MyUser = () => {
+const MyPost = () => {
 	// const [test, setTest] = useRecoilState(testState);
 	const [user, setUser] = useState('XYZ')
 
@@ -38,6 +38,9 @@ const MyUser = () => {
 
 	return (
 		<Conatainer>
+			<ProfileDiv>
+				프로필 사진
+			</ProfileDiv>
 			<NameDiv>
 				안녕하세요. <div id='name'>{`${user}`} </div> 님!
 			</NameDiv>
@@ -65,7 +68,7 @@ const MyUser = () => {
 	);
 };
 
-export default MyUser;
+export default MyPost;
 
 const Conatainer = styled.div`
   display: flex;
@@ -85,6 +88,10 @@ const Conatainer = styled.div`
     font-weight: 600;
   }
 `;
+
+const ProfileDiv = styled.div`
+	display: flex;
+`
 
 const NameDiv = styled.div`
   display: flex;

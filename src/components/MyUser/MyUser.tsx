@@ -22,6 +22,8 @@ const MyUser = () => {
       </NameDiv>
 
       <Btn value={'내 게시글 보기'} onRoute={`/my-postpage`} />
+      <Btn value={'회원정보 수정'} onRoute={`/`} />
+      <Btn value={'회원 탈퇴'} onRoute={`/`} />
     </Conatainer >
   );
 };
