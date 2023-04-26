@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export const HeaderWrapper = styled.header`
   width: 100%;
   text-align: center;
-  padding: 20px 10px;
+  padding: 20px 20px;
   background-color: red;
 `;
 
@@ -12,10 +13,46 @@ export const Nav = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  width: 100%;
   background-color: yellow;
 `;
 
 export const LinkWrapper = styled(Link)`
   margin: 0 0 0 25px;
 `;
+
+export const Search = styled(Image)`
+  background-color: green;
+  cursor: pointer;
+`
+
+export const Title = styled.div`
+  font-family: 'Roboto Flex', sans-serif;
+  font-weight: bold;
+  font-size: 40px;
+  position: relative;
+  top: 18px;
+`
+
+export const SearchUI = styled.div`
+  .search{
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .show{
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+  }
+
+  .hide{
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -20%);
+  }
+`
