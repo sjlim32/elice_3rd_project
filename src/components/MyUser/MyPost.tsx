@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, ChangeEvent } from 'react'
 // import { useRecoilState, useRecoilValue } from 'recoil';
 // import { useRouter } from 'next/router';
 import styled from 'styled-components'
-// import { testState } from '@/store/test';
 import Btn from '../hooks/button'
+import PostRouter from '../hooks/post_router'
 
 //----- MockData
-const postsList: any[] = [{
+const postsMockList: any[] = [{
 	"id": 2,
 	"user": { "nickname": "hi" },
 	"category": "카테고리1",
@@ -27,40 +27,65 @@ const postsList: any[] = [{
 }]
 
 const MyPost = () => {
-	// const [test, setTest] = useRecoilState(testState);
-	const [user, setUser] = useState('XYZ')
+	const [profile, setProfile] = useState('설명글')
+	const [img, setImage] = useState('/')
+	const [postsList, setPostsList] = useState(postsMockList)
+	const search = useRef('')
+	const inputRef: any = useRef()
+
+	// * 최초 게시글 목록 렌더
+	const FirstRender = async () => {
+		// const result = await axios.get(url)
+	}
 
 	useEffect(() => {
-		// api.get
-		// setUser()
+		// return FirstRender()
+		inputRef.current.focus()
+	}, [postsList])
 
-	}, [])
+	// * 검색
+	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
+		search.current = e.target.value
+	}
+
+	const handleSearch = () => {
+		try {
+			// const res = await axios.get(url, search.current)
+			// setPostList(res.data)
+			console.log(search.current)
+		} catch (error) {
+			console.error("에러", error)
+		}
+	}
 
 	return (
 		<Conatainer>
+			<TopDiv>
+				<Btn value={'뒤로가기'} onRoute={`/my-userpage`} alert={null} />
+				<SearchDiv>
+					<SearchInput ref={inputRef} placeholder={'검색어를 입력해주세요.'} onChange={handleInput}></SearchInput>
+					<SearchBtn onClick={() => handleSearch()}>검색</SearchBtn>
+				</SearchDiv>
+			</TopDiv>
 			<ProfileDiv>
-				프로필 사진
+				<ImgWrap src={img} alt={`프로필 사진`}></ImgWrap>
+				<DescribeWrap>{profile}</DescribeWrap>
 			</ProfileDiv>
-			<NameDiv>
-				안녕하세요. <div id='name'>{`${user}`} </div> 님!
-			</NameDiv>
-
-			<Btn value={'뒤로가기'} onRoute={`/my-userpage`} />
 
 			{
 				postsList.map((post, idx) => {
 					return (
-						<ContentWrap id={post.id}>
+						<ContentDiv id={post.id}>
 							<HeaderWrap>
-								<div>{post.title}</div>
-								<div>{post.content}</div>
+								<PostThumbnail alt={'썸네일'}></PostThumbnail>
+								<PostRouter link={post.id} title={post.title} />
 								<div>{post.summary}</div>
 							</HeaderWrap>
 							<FooterWrap>
 								<div>{post.category}</div>
 								<div>{post.createdAt}</div>
 							</FooterWrap>
-						</ContentWrap>
+						</ContentDiv>
 					)
 				}
 				)}
@@ -75,34 +100,99 @@ const Conatainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border: 1px solid red;
+
+
+	height: auto;
 
   * {
     display: flex;
     flex-direction: row;
     align-items: center;   
-    margin: 0.5rem;
-    border: 1px solid black;
-  }
-
-  #name {
-    font-weight: 600;
+    margin: 1rem;
+    border: 1px solid blue;
   }
 `;
 
+const TopDiv = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;   
+	justify-content: space-between;
+
+	padding: 0 3rem;
+
+	width: 75%
+`
+
+const SearchDiv = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: center;   
+	justify-content: space-between;
+`
+
+const SearchInput = styled.input`
+	padding-left: 0.5rem;
+
+	width: 15rem;
+	height: 2rem;
+
+	border: 1px solid black;
+  border-radius : 0.5rem;
+`
+
+const SearchBtn = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0.5rem 1rem 0.5rem 1rem;
+
+  flex-basis: 1rem;
+  flex-grow: 1;
+  border-radius : 0.5rem;
+  background-color: white;
+`
+
 const ProfileDiv = styled.div`
 	display: flex;
+	flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+
+	width: 75%;
 `
 
-const NameDiv = styled.div`
-  display: flex;
+const ImgWrap = styled.img`
+	display: flex;
+	flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+	flex-shrink: 0;
+	width: 25rem;	
 `
 
-const ContentWrap = styled.div`
+const DescribeWrap = styled.div`
+	display: flex;
+	flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+	width: 25rem;
+	height: 10rem;
+`
+
+const ContentDiv = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;   
-	margin: 0.5rem;
+	margin: 3rem;
 	border: 1px solid black;
+
+	width: 75%
 `
 
 const HeaderWrap = styled.div`
@@ -110,8 +200,20 @@ const HeaderWrap = styled.div`
 	flex-direction: column;
 	align-items: center;   
 	justify-contents: center;
-	margin: 0.5rem;
 	border: 1px solid black;
+
+	width: 90%
+`
+
+const PostThumbnail = styled.img`
+	display: flex;
+	flex-direction: column;
+	align-items: center;   
+	justify-contents: center;
+
+	// flex-basis: 1rem;
+  // flex-grow: 0;
+
 `
 
 const FooterWrap = styled.div`
@@ -119,6 +221,8 @@ const FooterWrap = styled.div`
 	flex-direction: row;
 	align-items: space-between;   
 	justify-contents: center;
-	margin: 0.5rem;
+	margin: 0 1rem 1rem 1rem;
 	border: 1px solid black;
+
+	width: 90%
 `

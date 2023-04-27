@@ -10,8 +10,8 @@ const MyUser = () => {
   const [user, setUser] = useState('XYZ')
 
   useEffect(() => {
-    // api.get
-    // setUser()
+    // const res = axios.get
+    // setUser(res.data)
 
   }, [])
 
@@ -21,9 +21,9 @@ const MyUser = () => {
         안녕하세요. <div id='name'>{`${user}`} </div> 님!
       </NameDiv>
 
-      <Btn value={'내 게시글 보기'} onRoute={`/my-postpage`} />
-      <Btn value={'회원정보 수정'} onRoute={`/`} />
-      <Btn value={'회원 탈퇴'} onRoute={`/`} />
+      <Btn value={'내 게시글 보기'} onRoute={`/my-postpage`} alert={null} />
+      <Btn value={'회원정보 수정'} onRoute={`/`} alert={null} />
+      <Btn value={'회원 탈퇴'} onRoute={`/`} alert={'정상적으로 탈퇴되었습니다.'} />
     </Conatainer >
   );
 };
