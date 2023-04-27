@@ -12,8 +12,7 @@ const Header = () => {
     <HeaderWrapper>
       <Title>ThreeLines</Title>      
       <Nav>        
-        <Search src="/images/Search.png" alt="검색" width="20"
-        height="20" onClick={handleClick}/>
+        <Search src="/images/Search.png" alt="검색" width='20' height='20' onClick={handleClick}/>
         {isSearchVisible && (
           <div style={{
             opacity: isSearchVisible ? 1 : 0,
@@ -23,8 +22,8 @@ const Header = () => {
             <button>검색</button>
           </div>
         )}
-        <LinkWrapper href={'/'}>Login</LinkWrapper>
-        <LinkWrapper href={'/'}>Join</LinkWrapper>
+        <LinkWrapper href={'/login'}>Login</LinkWrapper>
+        <LinkWrapper href={'/signup'}>Join</LinkWrapper>
       </Nav>
     </HeaderWrapper>
   )

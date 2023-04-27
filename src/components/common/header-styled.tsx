@@ -18,6 +18,7 @@ export const Nav = styled.div`
 
 export const LinkWrapper = styled(Link)`
   margin: 0 0 0 25px;
+  cursor: pointer;
 `;
 
 export const Search = styled(Image)`
@@ -28,7 +29,7 @@ export const Search = styled(Image)`
 export const Title = styled.div`
   font-family: 'Roboto Flex', sans-serif;
   font-weight: bold;
-  font-size: 40px;
+  font-size: 60px;
   position: relative;
   top: 18px;
 `
