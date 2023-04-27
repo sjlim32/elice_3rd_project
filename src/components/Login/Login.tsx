@@ -1,7 +1,10 @@
+import {LoginForm} from './login-styled';
+
 const Login = () => {
     return (
         <>
-            <div>Login component</div>
+            <div>Login</div>
+            <LoginForm/>
         </>
     )
 };

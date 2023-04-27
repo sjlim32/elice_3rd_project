@@ -1,4 +1,4 @@
-import { HeaderWrapper, LinkWrapper, Nav, Search, Title } from './header-styled'
+import { HeaderWrapper, LinkWrapper, Nav, Search, Title, Home } from './header-styled'
 import { useState } from 'react';
 
 const Header = () => {
@@ -10,7 +10,9 @@ const Header = () => {
 
   return (
     <HeaderWrapper>
-      <Title>ThreeLines</Title>      
+      <Home href={'/'}>
+        <Title>ThreeLines</Title> 
+      </Home>     
       <Nav>        
         <Search src="/images/Search.png" alt="검색" width='20' height='20' onClick={handleClick}/>
         {isSearchVisible && (

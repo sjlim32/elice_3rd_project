@@ -19,6 +19,7 @@ export const Nav = styled.div`
 export const LinkWrapper = styled(Link)`
   margin: 0 0 0 25px;
   cursor: pointer;
+  font-weight: bold;
 `;
 
 export const Search = styled(Image)`
@@ -32,6 +33,9 @@ export const Title = styled.div`
   font-size: 60px;
   position: relative;
   top: 18px;
+  left: 38%;
+  background-color: greenyellow;
+  width: 400px;
 `
 
 export const SearchUI = styled.div`
@@ -56,4 +60,8 @@ export const SearchUI = styled.div`
     visibility: hidden;
     transform: translate(-50%, -20%);
   }
+`
+
+export const Home = styled(Link)`
+  cursor: pointer;
 `
