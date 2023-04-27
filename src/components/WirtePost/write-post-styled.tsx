@@ -80,10 +80,14 @@ export const SummaryWrapper = styled.div`
     height: 32px;
     width: 80px;
     border: none;
-    padding: 5px 7px;
+    padding: 5px 0;
     border-radius: 10px;
-    background-color: #aec3b0;
+    /* background-color: #aec3b0; */
+    background: none;
     margin-bottom: 10px;
+    color: #598392;
+    font-weight: bold;
+    font-size: 1.1rem;
     &:hover {
       opacity: 0.7;
       transition: all 0.3s;
@@ -106,3 +110,5 @@ export const SummaryTextArea = styled.textarea`
     }
   }
 `;
+
+export const CategoryContainer = styled.div``;
