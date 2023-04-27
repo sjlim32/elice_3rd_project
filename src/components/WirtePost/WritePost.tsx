@@ -10,12 +10,15 @@ import {
   SummaryTextArea,
   SubmitButton,
   DeleteButton,
+  CategoryContainer,
 } from './write-post-styled';
 import { useRouter } from 'next/router';
 
 interface Props {
   isEdit?: Boolean;
 }
+
+const dummyCategory = ['카테고리1', '카테고리2', '카테고리3'];
 
 const WritePost = ({ isEdit }: Props) => {
   const titleRef = useRef<HTMLInputElement>(null);
@@ -108,11 +111,24 @@ const WritePost = ({ isEdit }: Props) => {
             </button>
             <SummaryTextArea
               name="summary"
-              placeholder="요약 추천 또는 직접 입력"
+              placeholder="요약을 입력하세요"
               ref={summaryRef}
             />
           </SummaryWrapper>
         </InputsContainer>
+        <CategoryContainer>
+          <h3>카테고리</h3>
+          {dummyCategory &&
+            dummyCategory?.map(item => {
+              return (
+                <label>
+                  {item}
+                  <input type="radio" name="category" value={item} />
+                </label>
+              );
+            })}
+          <button>카테고리 추가</button>
+        </CategoryContainer>
       </WriteFormContainer>
     </WritePostContainer>
   );
