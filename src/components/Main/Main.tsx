@@ -13,6 +13,7 @@ const Main = () => {
     <MainWrapper>
       <h1>main page</h1>
       <button onClick={goToRecoilTeset}>go to recoil-test page</button>
+      <Link href={'my-userpage'}>go to myuserpage</Link>
     </MainWrapper>
   )
 }
