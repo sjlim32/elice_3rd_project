@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { CategoryItemContainer } from './category-styled';
 
-const dummyCategory = ['카테고리1', '카테고리2', '카테고리3'];
-
 interface Props {
   category: {
-    id: Number;
-    name: String;
+    id: string;
+    name: string;
   };
 }
 

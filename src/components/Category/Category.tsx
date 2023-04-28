@@ -3,15 +3,15 @@ import { CategoryContainer } from './category-styled';
 import CategoryItem from './CategoryItem';
 
 interface dummy {
-  id: Number;
-  name: String;
+  id: string;
+  name: string;
 }
 
 const Category = () => {
   const [dummyCategory, setDummyCategory] = useState<dummy[]>([
-    { id: 1, name: '카테고리1' },
-    { id: 2, name: '카테고리2' },
-    { id: 3, name: '카테고리3' },
+    { id: '1', name: '카테고리1' },
+    { id: '2', name: '카테고리2' },
+    { id: '3', name: '카테고리3' },
   ]);
 
   const categoryRef = useRef<HTMLInputElement>(null);
@@ -21,7 +21,7 @@ const Category = () => {
       setDummyCategory([
         ...dummyCategory,
         {
-          id: Math.random(),
+          id: String(Math.random()),
           name: categoryRef.current?.value,
         },
       ]);
@@ -42,7 +42,7 @@ const Category = () => {
         <div>
           {dummyCategory &&
             dummyCategory.length > 0 &&
-            dummyCategory?.map(item => {
+            dummyCategory.map(item => {
               return <CategoryItem category={item} key={item.id} />;
             })}
         </div>
