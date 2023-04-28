@@ -6,24 +6,28 @@ interface Props {
     id: string;
     name: string;
   };
+  onCategoryItemChange: (item: Props['category']) => void;
+  onModalOpenedChange: (isOpened: boolean) => void;
 }
 
-const CategoryItem = ({ category }: Props) => {
+const CategoryItem = (props: Props) => {
   const editCategory = () => {
-    console.log(`${category.id} 편집`);
+    console.log(`${props.category.id} 편집`);
+    props.onModalOpenedChange(true);
+    props.onCategoryItemChange(props.category);
   };
 
   const deleteCategory = () => {
-    console.log(`${category.id} 삭제`);
+    console.log(`${props.category.id} 삭제`);
   };
 
   useEffect(() => {
-    console.log('cat', category);
+    console.log('cat', props.category);
   }, []);
 
   return (
     <CategoryItemContainer>
-      <p>{category.name}</p>
+      <p>{props.category.name}</p>
       <div>
         <button type="button" onClick={editCategory}>
           편집
