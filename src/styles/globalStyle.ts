@@ -13,6 +13,7 @@ ${reset};
   *::before,
   *::after {
     box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
   }
 
   a {
@@ -35,7 +36,7 @@ ${reset};
     user-select: auto;
   }
 
-  input:focus {
+  input:focus, textarea:focus {
     outline: none;
   }
 
