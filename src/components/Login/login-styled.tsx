@@ -5,34 +5,55 @@ export const Form = styled.form`
     flex-direction: column;
     align-items: center;
     border: 1px solid;
-    width: 50vw;
-    height: 50vh;
+    width: 500px;
+    height: 400px;
     margin-top: 50px;
+    position: relative;
+    top: 200px;
+    left: 33%;
 `;
 
-export const Input = styled.input`
-    margin: 10px;
+const LoginTitle = styled.h1`
+    font-family: 'Roboto Flex', sans-serif;
+    font-size: 30px;
+    margin-top: 40px;
+`
+
+const Input = styled.input`
+    margin: 10px 10px 10px 0;
     margin-top: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
-    width: 100%;
+    padding: 5px;
+    border: 0;
+    border-bottom: 1px solid;
+    width: 300px;
+    font-size: 15px;
+    position: relative;
+    left: 2%;
 `;
 
-export const Button = styled.button`
+const Button = styled.button`
     margin: 10px;
-    margin-top: 50px;
+    margin-top: 46px;
     padding: 10px 100px;
     border-radius: 5px;
     border: none;
     background-color: #598392;
     color: white;
     cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    color: #01161E;
 `;
 
 const InputWrapper = styled.div`
-    
+    margin-top: 40px;
+`
+
+const InputTitle = styled.h2`
+    font-family: 'Roboto Flex', sans-serif;
+    position: relative;
+    left: 2%;
+    top: 8%;
 `
 
 export const LoginForm = () => {
@@ -45,10 +66,13 @@ export const LoginForm = () => {
 
     return (
         <Form onSubmit={handleSubmit}>
-            <div>
-                <Input type="text" placeholder="Username"/>
-                <Input type="password" placeholder="Password"/>
-            </div>
+            <LoginTitle>로그인</LoginTitle>
+            <InputWrapper>
+                <InputTitle>이메일</InputTitle>                
+                <Input type="text" placeholder="example@email.com"/>
+                <InputTitle>비밀번호</InputTitle>  
+                <Input type="password" placeholder="●●●●●●●"/>
+            </InputWrapper>
             <Button type="submit">Login</Button>
         </Form>
     );
