@@ -1,7 +1,9 @@
+import { SignupForm } from './signup-styled';
+
 const Signup = () => {
   return (
     <>
-      <div>Signup component</div>
+      <SignupForm/>
     </>
   );
 };
