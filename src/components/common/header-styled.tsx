@@ -3,7 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export const HeaderWrapper = styled.header`
-  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
   text-align: center;
   padding: 20px 20px;
 `;
@@ -34,14 +35,13 @@ export const Title = styled.div`
   font-size: 60px;
   position: relative;
   top: 18px;
-  left: 37%;
+  left: 44%;
   width: 330px;
-  background-color: yellow;
 `
 
 export const SearchUI = styled.div`
   .search{
-    position: absolute;
+    position: relative;
     top: 100%;
     left: 50%;
     transform: translate(-50%, -20%);
