@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { CategoryItemContainer } from './category-styled';
+import { categoryType } from '@/types/category';
 
 interface Props {
-  category: {
-    id: string;
-    name: string;
-  };
+  category: categoryType;
   onCategoryItemChange: (item: Props['category']) => void;
   onModalOpenedChange: (isOpened: boolean) => void;
 }
