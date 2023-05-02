@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { CategoryModalContainer } from './category-styled';
+import {
+  CategoryModalContainer,
+  CategoryModalItem,
+  CloseModalButton,
+  SubmitEditButton,
+} from './category-styled';
 import { categoryType } from '@/types/category';
-import * as API from '@/utils/api';
 
 interface Props {
   categoryItem?: categoryType;
@@ -19,24 +23,6 @@ const CategoryModal = (props: Props) => {
     }
   }, [props]);
 
-
-  interface jsonType {
-      "userId": number,
-      "id": number,
-      "title": string,
-      "completed": boolean
-  }
-  const apiTest = async () : Promise<jsonType> => {
-    const response = await API.get<jsonType>('/posts');
-    return response.data
-  }
-  const testAPI = async() => {
-    const result = await apiTest()
-    console.log('test', result, typeof result)
-  }
-
- 
-
   const closeModal = () => {
     props.onModalOpenedChange(false);
   };
@@ -48,16 +34,17 @@ const CategoryModal = (props: Props) => {
 
   return (
     <CategoryModalContainer>
-      <button type="button" onClick={closeModal}>
-        닫기
-      </button>
-      <button type='button' onClick={testAPI}> test</button>
-      <div>
-        <input type="text" ref={categoryNameRef} />
-      </div>
-      <button type="button" onClick={editCategoryName}>
-        완료
-      </button>
+      <CategoryModalItem>
+        <CloseModalButton type="button" onClick={closeModal}>
+          닫기
+        </CloseModalButton>
+        <div>
+          <input type="text" ref={categoryNameRef} />
+        </div>
+        <SubmitEditButton type="button" onClick={editCategoryName}>
+          완료
+        </SubmitEditButton>
+      </CategoryModalItem>
     </CategoryModalContainer>
   );
 };

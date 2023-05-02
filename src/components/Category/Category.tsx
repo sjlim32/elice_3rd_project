@@ -1,5 +1,9 @@
 import { useRef, useState } from 'react';
-import { CategoryContainer } from './category-styled';
+import {
+  CategoryContainer,
+  CategoryFormWrapper,
+  CategoryItemWrapper,
+} from './category-styled';
 import CategoryItem from './CategoryItem';
 import CategoryModal from './CategoryModal';
 import { categoryType } from '@/types/category';
@@ -11,7 +15,10 @@ const Category = () => {
     { id: '3', name: '카테고리3' },
   ]);
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [categoryItem, setCategoryItem] = useState<categoryType>({ id: '', name: '' });
+  const [categoryItem, setCategoryItem] = useState<categoryType>({
+    id: '',
+    name: '',
+  });
 
   const handleCategoryItem = (item: categoryType) => {
     setCategoryItem(item);
@@ -42,27 +49,31 @@ const Category = () => {
 
   return (
     <CategoryContainer>
-      <div>
-        <h1>카테고리 설정</h1>
-        <form onSubmit={addCategory}>
-          <input type="text" ref={categoryRef} />
-          <button>추가</button>
-        </form>
-        <div>
-          {dummyCategory &&
-            dummyCategory.length > 0 &&
-            dummyCategory.map(item => {
-              return (
-                <CategoryItem
-                  category={item}
-                  key={item.id}
-                  onCategoryItemChange={handleCategoryItem}
-                  onModalOpenedChange={handleModalOpened}
-                />
-              );
-            })}
-        </div>
-      </div>
+      <h1>카테고리 설정</h1>
+      <CategoryFormWrapper onSubmit={addCategory}>
+        <input
+          type="text"
+          ref={categoryRef}
+          placeholder="카테고리를 입력하세요"
+          required
+        />
+        <button>추가</button>
+      </CategoryFormWrapper>
+      <CategoryItemWrapper>
+        {dummyCategory &&
+          dummyCategory.length > 0 &&
+          dummyCategory.map(item => {
+            return (
+              <CategoryItem
+                category={item}
+                key={item.id}
+                onCategoryItemChange={handleCategoryItem}
+                onModalOpenedChange={handleModalOpened}
+              />
+            );
+          })}
+      </CategoryItemWrapper>
+
       {isModalOpened ? (
         <div>
           <CategoryModal

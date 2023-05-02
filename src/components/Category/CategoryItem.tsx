@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { CategoryItemContainer } from './category-styled';
+import {
+  CategoryItemContainer,
+  CategoryName,
+  CategoryButtonContainer,
+} from './category-styled';
 import { categoryType } from '@/types/category';
 
 interface Props {
@@ -25,15 +29,15 @@ const CategoryItem = (props: Props) => {
 
   return (
     <CategoryItemContainer>
-      <p>{props.category.name}</p>
-      <div>
+      <CategoryName>{props.category.name}</CategoryName>
+      <CategoryButtonContainer>
         <button type="button" onClick={editCategory}>
           편집
         </button>
         <button type="button" onClick={deleteCategory}>
           삭제
         </button>
-      </div>
+      </CategoryButtonContainer>
     </CategoryItemContainer>
   );
 };
