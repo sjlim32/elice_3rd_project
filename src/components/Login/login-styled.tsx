@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+
 export const Form = styled.form`
     display: flex;
     flex-direction: column;
@@ -10,12 +11,13 @@ export const Form = styled.form`
     margin-top: 50px;
     position: relative;
     top: 200px;
-    left: 33%;
+    left: 38%;
 `;
 
 const LoginTitle = styled.h1`
     font-family: 'Roboto Flex', sans-serif;
     font-size: 30px;
+    font-weight: bold;
     margin-top: 40px;
 `
 

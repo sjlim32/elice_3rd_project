@@ -3,8 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export const HeaderWrapper = styled.header`
-  min-width: 100%;
-  max-width: 100%;
+  min-width: 1000px;
+  max-width: 1800px;
   text-align: center;
   padding: 20px 20px;
 `;
@@ -13,6 +13,8 @@ export const Nav = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  position: relative;
+  right: 10px;
 `;
 
 export const LinkWrapper = styled(Link)`
@@ -34,7 +36,7 @@ export const Title = styled.div`
   font-weight: bold;
   font-size: 60px;
   position: relative;
-  top: 18px;
+  top: 40px;
   left: 44%;
   width: 330px;
 `
@@ -83,4 +85,11 @@ export const SearchButton = styled.button`
 
 export const Home = styled(Link)`
   cursor: pointer;
+`
+
+export const HomeLogo = styled(Image)`
+  z-index: 1;
+  position: relative;
+  left: 25px;
+  bottom: 5px;
 `

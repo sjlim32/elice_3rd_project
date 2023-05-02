@@ -1,4 +1,4 @@
-import { HeaderWrapper, LinkWrapper, Nav, Search, Title, Home, SearchUI, SearchInput, SearchButton } from './header-styled'
+import { HeaderWrapper, LinkWrapper, Nav, Search, Title, Home, SearchUI, SearchInput, SearchButton, HomeLogo } from './header-styled'
 import { useState } from 'react';
 
 const Header = () => {
@@ -13,16 +13,10 @@ const Header = () => {
     setSearchInput(event.target.value);
   };
 
-  const handleSearch = (): void => {
-    console.log('Perform search with input:', searchInput);
-    // Implement search functionality
-  };
-
   return (
     <HeaderWrapper>
-      <Home href={'/'}>
-        <Title>ThreeLines</Title> 
-      </Home>     
+      
+      <Title>ThreeLines</Title>      
       <Nav>        
         <Search src="/images/Search.png" alt="검색" width='30' height='30' onClick={handleClick}/>
         {isSearchVisible && (
@@ -36,6 +30,9 @@ const Header = () => {
         )}
         <LinkWrapper href={'/login'}>Login</LinkWrapper>
         <LinkWrapper href={'/signup'}>Join</LinkWrapper>
+        <Home href={'/'}>
+          <HomeLogo src="/images/Home.png" alt="메인 페이지" width='30' height='30'/>
+        </Home>
       </Nav>
     </HeaderWrapper>
   )

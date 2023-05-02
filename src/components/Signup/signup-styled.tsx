@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
+
 const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 500px;
-    height: 800px;
+    height: 900px;
     margin-top: 10px;
     position: relative;
     top: 100px;
@@ -41,7 +42,7 @@ const Button = styled.button`
     width: 300px;
     height: 50px;
     position: relative;
-    top: 60px;
+    top: 100px;
     background-color: #598392;
     color: #01161E;
     font-size: 20px;
@@ -56,18 +57,18 @@ const Button = styled.button`
 `;
 
 const InputWrapper = styled.div`
-    margin-top: 50px;
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
     justify-content:center;
 `
 
 const SignupTitle = styled.h2`
-    font-size: 30px;
+    font-size: 40px;
     font-family: 'Roboto Flex', sans-serif;
     font-weight: bold;
     position: relative;
-    top: 2%;
+    top: 5%;
 `
 
 const InputTitle = styled.h2`
@@ -80,7 +81,7 @@ const InputTitle = styled.h2`
 
 const Bio = styled.textarea`
     resize: none; // 사용자가 크기를 조절할 수 없도록 설정.
-    border: none;
+    border: 1px solid;
     overflow-y: scroll;
     padding: 10px 5px;
     height: 100px;
@@ -91,8 +92,7 @@ const Bio = styled.textarea`
 export const SignupForm = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // 회원가입 로직 구현
-        console.log("Signup!");
+        // 회원가입 로직 구현        
 };
 
     return (
@@ -105,9 +105,9 @@ export const SignupForm = () => {
                     <InputTitle>이름</InputTitle>
                     <Input type="text" placeholder="name" required />                    
                     <InputTitle>이메일</InputTitle>
-                    <Input type="email" placeholder="example@email.com" required />
+                    <Input type="email" id='email' placeholder="example@email.com" required />
                     <InputTitle>비밀번호</InputTitle>
-                    <Input type="password" placeholder="●●●●●●●" required />
+                    <Input type="password" className='password' placeholder="●●●●●●●" required />
                     <InputTitle>블로그명</InputTitle>
                     <Input type="text" placeholder='최소 4자~최대 32자의 영문 소문자,숫자,하이픈 포함' required/>
                     <InputTitle>블로그 소개</InputTitle>
