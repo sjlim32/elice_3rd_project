@@ -12,7 +12,7 @@ export default memo(function Btn(props: BtnProps) {
   const router = useRouter();
 
   const goToPages = () => {
-    if (props.alert !== '') {
+    if (props.alert !== null) {
       alert(props.alert)
       router.push(props.onRoute)
     } else router.push(props.onRoute)

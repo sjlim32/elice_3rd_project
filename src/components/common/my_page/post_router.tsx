@@ -1,5 +1,5 @@
 import { useState, useEffect, memo } from 'react'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 import styled from 'styled-components'
 
 type RouteProps = {
@@ -10,6 +10,13 @@ type RouteProps = {
 export default memo(function PostRouter(props: RouteProps) {
 
 	return <>
-		<a href={'/' + `${props.link}`}>{props.title}</a>
+		<LinkWrapper href={'/' + `${props.link}`}>{props.title}</LinkWrapper>
 	</>
 })
+
+const LinkWrapper = styled(Link)`
+	&:hover{
+    background-color : lightgray;
+    color : yellow
+	}
+`

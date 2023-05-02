@@ -1,7 +1,8 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true
   },
   "extends": [
     "plugin:react/recommended",
@@ -9,6 +10,7 @@
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
     "airbnb",
     "airbnb/hook",
     "airbnb-typescript",

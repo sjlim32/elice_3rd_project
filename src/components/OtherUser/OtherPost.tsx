@@ -26,11 +26,11 @@ const postsMockList: any[] = [{
 	"createdAt": "2023-04-25T03:10:52.668Z"
 }]
 
-const MyPost = () => {
-	const [profile, setProfile] = useState('설명글')
-	const [img, setImage] = useState('/')
+const UserPost = () => {
+	const [profile, setProfile] = useState<string>('설명글')
+	const [img, setImage] = useState<string>('/')
 	const [postsList, setPostsList] = useState(postsMockList)
-	const search = useRef('')
+	const search: any = useRef('')
 	const inputRef: any = useRef()
 
 	// * 최초 게시글 목록 렌더
@@ -61,12 +61,16 @@ const MyPost = () => {
 	return (
 		<Container>
 			<TopDiv>
-				<Btn value={'뒤로가기'} onRoute={`/my-user`} alert={null} />
+				<Btn value={'뒤로가기'} onRoute={`/`} alert={null} />
 				<SearchDiv>
 					<SearchInput ref={inputRef} placeholder={'검색어를 입력해주세요.'} onChange={handleInput}></SearchInput>
 					<SearchBtn onClick={() => handleSearch()}>검색</SearchBtn>
 				</SearchDiv>
 			</TopDiv>
+			<ProfileDiv>
+				<ImgWrap src={img} alt={`프로필 사진`}></ImgWrap>
+				<DescribeWrap>{profile}</DescribeWrap>
+			</ProfileDiv>
 
 			{
 				postsList.map((post, idx) => {
@@ -89,7 +93,7 @@ const MyPost = () => {
 	);
 };
 
-export default MyPost;
+export default UserPost;
 
 const Container = styled.div`
   display: flex;
