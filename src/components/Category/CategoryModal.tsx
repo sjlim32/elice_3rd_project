@@ -21,12 +21,9 @@ const CategoryModal = (props: Props) => {
     props.onModalOpenedChange(false);
   };
 
-  const addCategory = () => {
-    console.log('add', categoryNameRef.current?.value);
-  };
-
   const editCategoryName = () => {
     console.log('edit', props.categoryItem?.id, categoryNameRef.current?.value);
+    closeModal();
   };
 
   return (
@@ -37,15 +34,9 @@ const CategoryModal = (props: Props) => {
       <div>
         <input type="text" ref={categoryNameRef} />
       </div>
-      {props.categoryItem ? (
-        <button type="button" onClick={editCategoryName}>
-          완료
-        </button>
-      ) : (
-        <button type="button" onClick={addCategory}>
-          추가
-        </button>
-      )}
+      <button type="button" onClick={editCategoryName}>
+        완료
+      </button>
     </CategoryModalContainer>
   );
 };

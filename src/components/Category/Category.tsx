@@ -27,7 +27,9 @@ const Category = () => {
 
   const categoryRef = useRef<HTMLInputElement>(null);
 
-  const addCategory = () => {
+  const addCategory = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     categoryRef.current?.value &&
       setDummyCategory([
         ...dummyCategory,
@@ -37,6 +39,8 @@ const Category = () => {
         },
       ]);
 
+    categoryRef.current && (categoryRef.current.value = '');
+
     console.log(dummyCategory);
   };
 
@@ -44,12 +48,10 @@ const Category = () => {
     <CategoryContainer>
       <div>
         <h1>카테고리 설정</h1>
-        <div>
+        <form onSubmit={addCategory}>
           <input type="text" ref={categoryRef} />
-          <button type="button" onClick={addCategory}>
-            추가
-          </button>
-        </div>
+          <button>추가</button>
+        </form>
         <div>
           {dummyCategory &&
             dummyCategory.length > 0 &&
