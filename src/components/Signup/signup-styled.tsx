@@ -1,16 +1,17 @@
 import styled from 'styled-components';
 
+
 const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 500px;
-    height: 800px;
+    height: 900px;
     margin-top: 10px;
     position: relative;
     top: 100px;
-    left: 33%;
+    left: 40%;
 `;
 
 const Form = styled.form`
@@ -23,6 +24,8 @@ const Form = styled.form`
     border-radius: 4px;
     width: 150%;
     height: 150%;
+    position: relative;
+    bottom: 55px;
 `;
 
 const Input = styled.input`
@@ -54,18 +57,18 @@ const Button = styled.button`
 `;
 
 const InputWrapper = styled.div`
-    margin-top: 100px;
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
     justify-content:center;
 `
 
 const SignupTitle = styled.h2`
-    font-size: 30px;
+    font-size: 40px;
     font-family: 'Roboto Flex', sans-serif;
     font-weight: bold;
     position: relative;
-    top: 10%;
+    top: 5%;
 `
 
 const InputTitle = styled.h2`
@@ -74,13 +77,22 @@ const InputTitle = styled.h2`
     position: relative;
     left: 0px;
     top: 5%;
+`;
+
+const Bio = styled.textarea`
+    resize: none; // 사용자가 크기를 조절할 수 없도록 설정.
+    border: 1px solid;
+    overflow-y: scroll;
+    padding: 10px 5px;
+    height: 100px;
+    position: relative;
+    top: 45px;
 `
 
 export const SignupForm = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        // 회원가입 로직 구현
-        console.log("Signup!");
+        // 회원가입 로직 구현        
 };
 
     return (
@@ -88,16 +100,18 @@ export const SignupForm = () => {
             <Form onSubmit={handleSubmit}>
                 <SignupTitle>회원가입</SignupTitle>
                 <InputWrapper>
+                    <InputTitle>닉네임</InputTitle>
+                    <Input type="text" placeholder="nickname" required />
                     <InputTitle>이름</InputTitle>
-                    <Input type="text" placeholder="name" required />
+                    <Input type="text" placeholder="name" required />                    
                     <InputTitle>이메일</InputTitle>
-                    <Input type="email" placeholder="example@email.com" required />
-                    <InputTitle>전화번호</InputTitle>
-                    <Input type="phone" placeholder="010-xxxx-xxxx" required/>
+                    <Input type="email" id='email' placeholder="example@email.com" required />
                     <InputTitle>비밀번호</InputTitle>
-                    <Input type="password" placeholder="●●●●●●●" required />
-                    <InputTitle>비밀번호 확인</InputTitle>
-                    <Input type="password" placeholder="●●●●●●●" required />
+                    <Input type="password" className='password' placeholder="●●●●●●●" required />
+                    <InputTitle>블로그명</InputTitle>
+                    <Input type="text" placeholder='최소 4자~최대 32자의 영문 소문자,숫자,하이픈 포함' required/>
+                    <InputTitle>블로그 소개</InputTitle>
+                    <Bio placeholder='소개글을 입력하세요' required/>
                 </InputWrapper>
                 <Button type="submit">회원가입</Button>
             </Form>
