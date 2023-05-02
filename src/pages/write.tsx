@@ -1,9 +1,9 @@
-import WritePost from '@/components/WirtePost/WritePost'
+import WritePost from '@/components/WirtePost/WritePost';
 
-export default function Write() {
+export default function WritePage() {
   return (
     <>
       <WritePost />
     </>
-  )
+  );
 }
