@@ -2,22 +2,18 @@ import { useRef, useState } from 'react';
 import { CategoryContainer } from './category-styled';
 import CategoryItem from './CategoryItem';
 import CategoryModal from './CategoryModal';
-
-interface dummy {
-  id: string;
-  name: string;
-}
+import { categoryType } from '@/types/category';
 
 const Category = () => {
-  const [dummyCategory, setDummyCategory] = useState<dummy[]>([
+  const [dummyCategory, setDummyCategory] = useState<categoryType[]>([
     { id: '1', name: '카테고리1' },
     { id: '2', name: '카테고리2' },
     { id: '3', name: '카테고리3' },
   ]);
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [categoryItem, setCategoryItem] = useState<dummy>({ id: '', name: '' });
+  const [categoryItem, setCategoryItem] = useState<categoryType>({ id: '', name: '' });
 
-  const handleCategoryItem = (item: dummy) => {
+  const handleCategoryItem = (item: categoryType) => {
     setCategoryItem(item);
   };
 
