@@ -29,7 +29,7 @@ const Header = () => {
           </div>
         )}
         <LinkWrapper href={'/login'}>Login</LinkWrapper>
-        <LinkWrapper href={'/signup'}>Join</LinkWrapper>
+        <LinkWrapper href={'/signup'}>SignUp</LinkWrapper>
         <Home href={'/'}>
           <HomeLogo src="/images/Home.png" alt="메인 페이지" width='30' height='30'/>
         </Home>
