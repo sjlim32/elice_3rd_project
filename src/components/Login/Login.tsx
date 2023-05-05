@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Form, LoginTitle, InputWrapper, InputTitle, Input, Button} from './login-styled';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import auth from '../common/auth';
-import Main from '../Main/Main';
 
 const Login = () => {
     const [email, setEmail] = useState<string>('');
