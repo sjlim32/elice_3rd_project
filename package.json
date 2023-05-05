@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@toast-ui/react-editor": "^3.2.3",
     "@types/node": "18.15.11",
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",
     "axios": "^1.4.0",
+    "codemirror": "^6.0.1",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
     "firebase": "^9.21.0",
