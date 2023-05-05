@@ -10,7 +10,7 @@ export const Container = styled.div`
     margin-top: 10px;
     position: relative;
     top: 100px;
-    left: 40%;
+    left: 38%;
 `;
 
 export const Form = styled.form`
@@ -41,7 +41,7 @@ export const Button = styled.button`
     width: 300px;
     height: 50px;
     position: relative;
-    top: 100px;
+    top: 150px;
     background-color: #598392;
     color: #01161E;
     font-size: 20px;
@@ -56,7 +56,7 @@ export const Button = styled.button`
 `;
 
 export const InputWrapper = styled.div`
-    margin-top: 40px;
+    margin-top: 60px;
     display: flex;
     flex-direction: column;
     justify-content:center;

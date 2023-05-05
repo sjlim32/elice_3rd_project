@@ -21,13 +21,11 @@ const Header = () => {
 
   useEffect(() => {
     onAuthStateChanged( auth, isLoggedIn => {
-      console.log(isLoggedIn); // user data, null
       if(isLoggedIn){
         setIsLoggedIn(true);
       } else{
         setIsLoggedIn(false);
-      }
-      
+      }      
     })
   }, []);
 
