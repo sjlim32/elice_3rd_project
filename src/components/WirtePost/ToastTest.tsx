@@ -1,13 +1,14 @@
 import dynamic from 'next/dynamic';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { ForwardedRef, forwardRef, useEffect, useRef, useState } from 'react';
+import { Editor } from '@toast-ui/react-editor';
 // import axios from 'axios';
 
 const EditorDynamic = dynamic(() => import('./Editor'), {
   ssr: false,
 });
 
-const EditorForwardRef = forwardRef((props, ref) => {
+const EditorForwardRef = forwardRef((props, ref: ForwardedRef<Editor>) => {
   return <EditorDynamic {...props} forwardedRef={ref} />;
 });
 
@@ -15,7 +16,7 @@ EditorForwardRef.displayName = 'Editor';
 
 export default function BoardWrite() {
   const [value, setValue] = useState('');
-  const contentRef = useRef(null);
+  const contentRef = useRef<Editor>(null);
 
   useEffect(() => {
     const valueExam =
@@ -34,13 +35,16 @@ export default function BoardWrite() {
     //   content: testtest,
     // });
 
-    const test = contentRef.current?.getInstance().getHTML();
-    const test2 = document.querySelector(
-      '#textContentTest .ProseMirror.toastui-editor-contents'
-    );
-    console.log('textContent', test2);
-    console.log('textContent', test2?.innerHTML.replace(/<[^>]+>/g, '\n'));
-    console.log('textContent', test2?.innerHTML.replace(/<br>/g, '\n'));
+    const innerHTMLText = contentRef.current?.getInstance().getHTML()
+
+    const tempDiv = document.createElement('div')
+
+    tempDiv.innerHTML = innerHTMLText as string;
+
+    const text = tempDiv.textContent
+
+    console.log(text)
+    console.log('^^^ text')
   };
 
   return (
