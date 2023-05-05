@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-
-const Container = styled.div`
+export const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -11,10 +10,10 @@ const Container = styled.div`
     margin-top: 10px;
     position: relative;
     top: 100px;
-    left: 40%;
+    left: 38%;
 `;
 
-const Form = styled.form`
+export const Form = styled.form`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,7 +27,7 @@ const Form = styled.form`
     bottom: 55px;
 `;
 
-const Input = styled.input`
+export const Input = styled.input`
     padding: 10px;
     margin-top: 30px;
     border: 0;
@@ -37,12 +36,12 @@ const Input = styled.input`
     font-size: 15px;
 `;
 
-const Button = styled.button`
+export const Button = styled.button`
     padding: 10px;
     width: 300px;
     height: 50px;
     position: relative;
-    top: 100px;
+    top: 150px;
     background-color: #598392;
     color: #01161E;
     font-size: 20px;
@@ -56,14 +55,14 @@ const Button = styled.button`
     }
 `;
 
-const InputWrapper = styled.div`
-    margin-top: 40px;
+export const InputWrapper = styled.div`
+    margin-top: 60px;
     display: flex;
     flex-direction: column;
     justify-content:center;
 `
 
-const SignupTitle = styled.h2`
+export const SignupTitle = styled.h2`
     font-size: 40px;
     font-family: 'Roboto Flex', sans-serif;
     font-weight: bold;
@@ -71,7 +70,7 @@ const SignupTitle = styled.h2`
     top: 5%;
 `
 
-const InputTitle = styled.h2`
+export const InputTitle = styled.h2`
     font-family: 'Roboto Flex', sans-serif;
     text-align: left;
     position: relative;
@@ -79,7 +78,7 @@ const InputTitle = styled.h2`
     top: 5%;
 `;
 
-const Bio = styled.textarea`
+export const Bio = styled.textarea`
     resize: none; // 사용자가 크기를 조절할 수 없도록 설정.
     border: 1px solid;
     overflow-y: scroll;
@@ -88,34 +87,4 @@ const Bio = styled.textarea`
     position: relative;
     top: 45px;
 `
-
-export const SignupForm = () => {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        // 회원가입 로직 구현        
-};
-
-    return (
-        <Container>
-            <Form onSubmit={handleSubmit}>
-                <SignupTitle>회원가입</SignupTitle>
-                <InputWrapper>
-                    <InputTitle>닉네임</InputTitle>
-                    <Input type="text" placeholder="nickname" required />
-                    <InputTitle>이름</InputTitle>
-                    <Input type="text" placeholder="name" required />                    
-                    <InputTitle>이메일</InputTitle>
-                    <Input type="email" id='email' placeholder="example@email.com" required />
-                    <InputTitle>비밀번호</InputTitle>
-                    <Input type="password" className='password' placeholder="●●●●●●●" required />
-                    <InputTitle>블로그명</InputTitle>
-                    <Input type="text" placeholder='최소 4자~최대 32자의 영문 소문자,숫자,하이픈 포함' required/>
-                    <InputTitle>블로그 소개</InputTitle>
-                    <Bio placeholder='소개글을 입력하세요' required/>
-                </InputWrapper>
-                <Button type="submit">회원가입</Button>
-            </Form>
-        </Container>
-    );
-};
 
