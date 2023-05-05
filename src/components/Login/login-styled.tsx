@@ -10,7 +10,7 @@ export const Form = styled.form`
     height: 400px;
     margin-top: 50px;
     position: relative;
-    top: 200px;
+    top: 140px;
     left: 38%;
 `;
 

@@ -1,9 +1,15 @@
-import { HeaderWrapper, LinkWrapper, Nav, Search, Title, Home, SearchUI, SearchInput, SearchButton, HomeLogo } from './header-styled'
-import { useState } from 'react';
+import { HeaderWrapper, LinkWrapper, Nav, Search, Title, Home
+  , SearchUI, SearchInput, SearchButton, HomeLogo, LogIn } from './header-styled'
+import { useState, useEffect } from 'react';
+import auth from './auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+
+
 
 const Header = () => {
   const [isSearchVisible, setIsSearchVisible] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>('');
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const handleClick = ():void => {
     setIsSearchVisible(show => !show);
@@ -12,6 +18,18 @@ const Header = () => {
   const handleSearchInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchInput(event.target.value);
   };
+
+  useEffect(() => {
+    onAuthStateChanged( auth, isLoggedIn => {
+      console.log(isLoggedIn); // user data, null
+      if(isLoggedIn){
+        setIsLoggedIn(true);
+      } else{
+        setIsLoggedIn(false);
+      }
+      
+    })
+  }, []);
 
   return (
     <HeaderWrapper>
@@ -25,11 +43,18 @@ const Header = () => {
           }`}>
             <SearchInput type="text" placeholder="검색어를 입력하세요"
             value={searchInput} onChange={handleSearchInputChange}/>
-            <SearchButton>검색</SearchButton>
+            <SearchButton>Search</SearchButton>
           </div>
         )}
-        <LinkWrapper href={'/login'}>Login</LinkWrapper>
-        <LinkWrapper href={'/signup'}>SignUp</LinkWrapper>
+        {isLoggedIn ? (
+          <LogIn onClick={() => signOut(auth)}>Logout</LogIn>
+        ) : (<>
+            <LinkWrapper href={'/login'}>Login</LinkWrapper>
+            {!isLoggedIn && (
+              <LinkWrapper href={'/signup'}>SignUp</LinkWrapper>
+            )}
+          </>          
+        )}       
         <Home href={'/'}>
           <HomeLogo src="/images/Home.png" alt="메인 페이지" width='30' height='30'/>
         </Home>

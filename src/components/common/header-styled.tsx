@@ -74,9 +74,13 @@ export const SearchInput = styled.input`
 `
 
 export const SearchButton = styled.button`
+  border: none;
+  border-radius: 5px;
+  background-color: #598392;
   font-family: 'Roboto Flex', sans-serif;
+  font-weight: bold;
   font-size: 15px;
-  width: 50px;
+  width: 60px;
   height: 30px;
   position: relative;
   bottom: 3px;
@@ -92,4 +96,16 @@ export const HomeLogo = styled(Image)`
   position: relative;
   left: 25px;
   bottom: 5px;
+`
+export const LogIn = styled.button`
+  border: none;
+  background: none;
+  font-weight: bold;
+  font-family: 'Roboto Flex', sans-serif;
+  position: relative;
+  bottom: 5px;
+  font-size: 20px;
+  margin: 0 0 0 25px;
+  cursor: pointer;
+  text-decoration: none;
 `
