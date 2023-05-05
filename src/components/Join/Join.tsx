@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import {Container, Form, Input, Button, InputWrapper, SignupTitle, InputTitle, Bio} from './signup-styled';
+import {Container, Form, Input, Button, InputWrapper, SignupTitle, InputTitle, Bio} from './join-styled';
 
 interface SignupData {
     email: string,
@@ -11,7 +11,7 @@ interface SignupData {
 }
 
 
-const Signup = () => {
+const Join = () => {
     const [signupData, setSignupData] = useState<SignupData>({
         email: '',
         password: '',
@@ -24,12 +24,12 @@ const Signup = () => {
         setSignupData({...signupData, [e.target.name]: e.target.value});
     }    
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // 회원가입 로직 구현
 
         try{
-            const response = await axios.post('http://127.0.0.1:3000/api/v1/auth/join', signupData, {
+            const response = axios.post('http://127.0.0.1:3000/join', signupData, {
                 timeout: 10000 // 10초 시간 제한 설정
             });
             console.log(response);
@@ -64,4 +64,4 @@ const Signup = () => {
     );
 };
 
-export default Signup;
+export default Join;

@@ -49,7 +49,7 @@ const Header = () => {
         ) : (<>
             <LinkWrapper href={'/login'}>Login</LinkWrapper>
             {!isLoggedIn && (
-              <LinkWrapper href={'/signup'}>SignUp</LinkWrapper>
+              <LinkWrapper href={'/join'}>Join</LinkWrapper>
             )}
           </>          
         )}       
