@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as API from '@/utils/api';
 
 const Title = styled.div`
   width: 40%;
@@ -65,6 +66,18 @@ const Comment = styled.div`
   margin: 1em auto;
   font-size: 1rem;
 `;
+
+interface PostDetail {
+  id: number,
+  category: string,
+  title: string,
+  summary: string,
+  user: { nickname: string },
+  content: string,
+  views: number,
+  created_at: Date,
+  updated_at: Date
+};
 
 export default function Posts() {
   return (
