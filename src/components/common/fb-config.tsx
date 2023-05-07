@@ -1,14 +1,15 @@
-import {initializeApp} from 'firebase/app';
+import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCledh9bZLoEDkDP-KVmqNQgY3z2YrU8F4",
-    authDomain: "rd-project-10team.firebaseapp.com",
-    projectId: "rd-project-10team",
-    storageBucket: "rd-project-10team.appspot.com",
-    messagingSenderId: "437706185090",
-    appId: "1:437706185090:web:c18ca95279cf9fb56e979b",
-    measurementId: "G-HNLKT0C1Z2"
-}
+  apiKey: process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId:
+    process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_REACT_APP_FIREBASE_MEASUREMENT_ID,
+};
 
 const app = initializeApp(firebaseConfig);
 

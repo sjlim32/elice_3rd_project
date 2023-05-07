@@ -3,11 +3,11 @@ import Link from 'next/link'
 import { MainWrapper, MainHeader, MainNav } from './main-styled'
 
 const Main = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   const goToRecoilTeset = () => {
-    router.push('/recoil-test')
-  }
+    router.push('/recoil-test');
+  };
 
   return (
     <MainWrapper>
@@ -19,7 +19,7 @@ const Main = () => {
       <h1>main page</h1>
       <button onClick={goToRecoilTeset}>go to recoil-test page</button>
     </MainWrapper>
-  )
-}
+  );
+};
 
-export default Main
+export default Main;
