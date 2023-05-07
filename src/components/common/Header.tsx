@@ -30,8 +30,7 @@ const Header = () => {
   }, []);
 
   return (
-    <HeaderWrapper>
-      
+    <HeaderWrapper>      
       <Title>ThreeLines</Title>      
       <Nav>        
         <Search src="/images/Search.png" alt="검색" width='30' height='30' onClick={handleClick}/>

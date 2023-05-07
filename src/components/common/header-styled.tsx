@@ -29,7 +29,7 @@ export const Search = styled(Image)`
   position: relative;
   bottom: 5px;
   right: 5px;
-`
+`;
 
 export const Title = styled.div`
   font-family: 'Roboto Flex', sans-serif;
@@ -39,7 +39,7 @@ export const Title = styled.div`
   top: 40px;
   left: 44%;
   width: 330px;
-`
+`;
 
 export const SearchUI = styled.div`
   .search{
@@ -63,7 +63,7 @@ export const SearchUI = styled.div`
     visibility: hidden;
     transform: translate(-50%, -20%);
   }
-`
+`;
 
 export const SearchInput = styled.input`
   font-family: 'Roboto Flex', sans-serif;
@@ -71,7 +71,7 @@ export const SearchInput = styled.input`
   width: 150px;
   border: 0;
   border-bottom: 1px solid;
-`
+`;
 
 export const SearchButton = styled.button`
   border: none;
@@ -85,18 +85,19 @@ export const SearchButton = styled.button`
   position: relative;
   bottom: 3px;
   left: 2px;
-`
+`;
 
 export const Home = styled(Link)`
   cursor: pointer;
-`
+`;
 
 export const HomeLogo = styled(Image)`
   z-index: 1;
   position: relative;
   left: 25px;
   bottom: 5px;
-`
+`;
+
 export const LogIn = styled.button`
   border: none;
   background: none;
@@ -108,4 +109,4 @@ export const LogIn = styled.button`
   margin: 0 0 0 25px;
   cursor: pointer;
   text-decoration: none;
-`
+`;
