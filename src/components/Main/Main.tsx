@@ -1,13 +1,13 @@
-import { useRouter } from 'next/router'
-import Link from 'next/link'
-import { MainWrapper } from './main-styled'
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { MainWrapper } from './main-styled';
 
 const Main = () => {
-  const router = useRouter()
+  const router = useRouter();
 
   const goToRecoilTeset = () => {
-    router.push('/recoil-test')
-  }
+    router.push('/recoil-test');
+  };
 
   return (
     <MainWrapper>
@@ -16,7 +16,7 @@ const Main = () => {
       <Link href={'my-user'}>go to myuserpage</Link>
       <Link href={'other-post'}>go to otherpostpage</Link>
     </MainWrapper>
-  )
-}
+  );
+};
 
-export default Main
+export default Main;
