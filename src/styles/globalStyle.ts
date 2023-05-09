@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components'
-import reset from 'styled-reset'
+import { createGlobalStyle } from 'styled-components';
+import reset from 'styled-reset';
 
 export const GlobalStyle = createGlobalStyle`
 ${reset};
@@ -45,7 +45,7 @@ ${reset};
     cursor: pointer;
   }
 
-  .tox-notification {
+  .tox-notification, .tox-statusbar {
     display: none !important;
   }
-`
+`;
