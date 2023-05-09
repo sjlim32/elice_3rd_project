@@ -1,12 +1,12 @@
 import dynamic from 'next/dynamic';
-import '@toast-ui/editor/dist/toastui-editor.css';
 import { ForwardedRef, forwardRef, useEffect, useRef, useState } from 'react';
 import { Editor, EditorProps } from '@toast-ui/react-editor';
-// import axios from 'axios';
 
 const EditorDynamic = dynamic(() => import('./Editor'), {
   ssr: false,
 });
+
+type PreviewStyle = 'tab' | 'vertical';
 
 const EditorForwardRef = forwardRef(
   (props: EditorProps, ref: ForwardedRef<Editor>) => {
@@ -16,26 +16,46 @@ const EditorForwardRef = forwardRef(
 
 EditorForwardRef.displayName = 'Editor';
 
-export default function BoardWrite() {
-  const [value, setValue] = useState('');
+type contentType = {
+  value: string;
+};
+
+const ToastEditor = ({ value }: contentType) => {
+  const [previewStyle, setPreviewStyle] = useState<PreviewStyle>('vertical');
   const contentRef = useRef<Editor>(null);
 
-  useEffect(() => {
-    const valueExam =
-      '**type here!** \n# hi\n## hello\n*byeddddd*\n\n| hi |hello  |\n| --- | --- |\n|  aa|bb  |';
+  const toolbarItems = [
+    ['heading', 'bold', 'italic', 'strike'],
+    ['hr'],
+    ['ul', 'ol', 'task'],
+    ['table', 'link'],
+    // ['image'],
+    ['code'],
+    ['scrollSync'],
+  ];
 
-    setValue(valueExam);
+  useEffect(() => {
+    contentRef.current?.getInstance().setMarkdown('a');
+    console.log('val', value);
+    const handleResize = () => {
+      const isMobile = window.innerWidth < 768;
+      setPreviewStyle(isMobile ? 'tab' : 'vertical');
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   const onSubmit = () => {
     const innerHTMLText = contentRef.current?.getInstance().getHTML();
-
     const tempDiv = document.createElement('div');
-
     tempDiv.innerHTML = innerHTMLText as string;
-
     const text = tempDiv.textContent;
 
+    console.log(innerHTMLText);
     console.log(text);
     console.log('^^^ text');
   };
@@ -44,14 +64,18 @@ export default function BoardWrite() {
     <div style={{ height: '400px' }}>
       <EditorForwardRef
         ref={contentRef}
-        initialValue={value}
-        previewStyle="vertical"
+        initialValue={value || ''}
+        // previewStyle={'tab'}
         height="100%"
-        initialEditType="markdown"
+        initialEditType="wysiwyg"
         useCommandShortcut={false}
+        usageStatistics={false}
         hideModeSwitch={true}
+        toolbarItems={toolbarItems}
       />
       <button onClick={onSubmit}>등록</button>
     </div>
   );
-}
+};
+
+export default ToastEditor;
