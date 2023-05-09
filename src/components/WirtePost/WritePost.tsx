@@ -4,13 +4,9 @@ import {
   WriteFormContainer,
   SubmitButtonContainer,
   InputsContainer,
-  SummaryWrapper,
   TitleInput,
-  ContentTextArea,
-  SummaryTextArea,
   SubmitButton,
   DeleteButton,
-  CategoryContainer,
 } from './write-post-styled';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
