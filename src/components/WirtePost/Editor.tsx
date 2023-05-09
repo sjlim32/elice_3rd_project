@@ -1,4 +1,4 @@
-import { Editor } from '@toast-ui/react-editor';
+import { Editor } from '@tinymce/tinymce-react';
 
 const EditorComponent = (props: any) => {
   const { forwardedRef } = props;

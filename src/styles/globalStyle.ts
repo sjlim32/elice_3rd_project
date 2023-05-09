@@ -7,7 +7,7 @@ ${reset};
   	line-height: 1;
     font-family: 'Noto Sans KR', sans-serif;
   }
- 
+
   html,
   *,
   *::before,
@@ -32,7 +32,7 @@ ${reset};
     background-color: transparent;
   }
 
-  input, textarea { 
+  input, textarea {
     user-select: auto;
   }
 
@@ -43,5 +43,9 @@ ${reset};
   button {
     padding: 0;
     cursor: pointer;
+  }
+
+  .tox-notification {
+    display: none !important;
   }
 `

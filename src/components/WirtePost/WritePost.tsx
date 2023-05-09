@@ -10,7 +10,8 @@ import {
 } from './write-post-styled';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import { Editor, EditorProps } from '@toast-ui/react-editor';
+import { Editor, IAllProps as EditorProps } from '@tinymce/tinymce-react';
+import { Editor as TinyMCEEditor } from 'tinymce';
 
 const EditorDynamic = dynamic(() => import('./Editor'), {
   ssr: false,
@@ -33,7 +34,7 @@ const dummyCategory = ['카테고리1', '카테고리2', '카테고리3'];
 const WritePost = ({ isEdit }: Props) => {
   const [editContent, setEditContent] = useState<string>('');
   const titleRef = useRef<HTMLInputElement>(null);
-  const contentRef = useRef<Editor>(null);
+  const contentRef = useRef<TinyMCEEditor | null>(null);
 
   const router = useRouter();
   const toolbarItems = [
@@ -59,17 +60,19 @@ const WritePost = ({ isEdit }: Props) => {
 
   const handleSubmit = () => {
     const title = titleRef.current?.value;
-    const content = contentRef.current?.getInstance().getMarkdown();
+    const content  = contentRef.current?.getContent()
+
+    console.log('content : ', content)
 
     if (!titleRef.current?.value) {
       return titleRef.current?.focus();
     }
 
     if (content?.trim() === '') {
-      return contentRef.current?.getInstance().focus();
+      return contentRef.current?.focus()
     }
 
-    const innerHTMLText = contentRef.current?.getInstance().getHTML();
+    const innerHTMLText = contentRef.current?.getContent();
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = innerHTMLText as string;
     const text = tempDiv.textContent;
@@ -77,13 +80,13 @@ const WritePost = ({ isEdit }: Props) => {
     console.log(text);
     console.log('^^^ text');
 
-    const textInner = contentRef.current?.getRootElement().innerText;
-    const textOnly = contentRef.current?.getRootElement().textContent;
-    const root = contentRef.current?.getRootElement();
+    // const textInner = contentRef.current?.getRootElement().innerText;
+    // const textOnly = contentRef.current?.getRootElement().textContent;
+    // const root = contentRef.current?.getRootElement();
 
-    console.log('text', { textInner, textOnly, root });
+    // console.log('text', { textInner, textOnly, root });
 
-    console.log('저장', { title, content });
+    // console.log('저장', { title, content });
   };
 
   const handleDelete = () => {
@@ -117,16 +120,20 @@ const WritePost = ({ isEdit }: Props) => {
           />
           <div style={{ height: '400px' }}>
             <EditorForwardRef
-              ref={contentRef}
+              onInit={(evt, editor) => {
+                contentRef.current = editor // eslint-disable-line
+              }}
               initialValue={editContent || ''}
-              placeholder="플레이스홀더에요"
+              init={{
+                placeholder: '플레이스홀더에요'
+              }}
               // previewStyle={'tab'}
-              height="100%"
-              initialEditType="wysiwyg"
-              useCommandShortcut={false}
-              usageStatistics={false}
-              hideModeSwitch={true}
-              toolbarItems={toolbarItems}
+              // height="100%"
+              // initialEditType="wysiwyg"
+              // useCommandShortcut={false}
+              // usageStatistics={false}
+              // hideModeSwitch={true}
+              // toolbarItems={toolbarItems}
             />
           </div>
         </InputsContainer>
