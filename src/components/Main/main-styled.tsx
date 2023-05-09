@@ -36,19 +36,19 @@ export const MainNav = styled.h2`
 export const MainNavImage = styled(Image)`
   &.trending {
     position: relative;
-    top: -5px;
+    top: -1px;
     left: 23px;
   }
 
   &.subscribe {
     position: relative;
-    top: -6px;
+    top: -1px;
     left: 23px;
   }
   
   &.recentPosts{
     position: relative;
-    top: -5px;
+    top: -1px;
     left: 25px;
   }
 `;
