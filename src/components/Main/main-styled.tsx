@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Image from 'next/image';
 
 export const MainWrapper = styled.main`
   width: 100%;
@@ -15,10 +16,13 @@ export const MainWrapper = styled.main`
 `;
 
 export const MainHeader = styled.div`
-  width: 350px;
+  width: 800px;
+  height: 100px;
   display: flex;
   flex-direction: row;
   justify-content: left;
+  background-color: yellow;
+  font-size: 20px;
 `;
 
 export const MainNav = styled.h2`
@@ -28,3 +32,24 @@ export const MainNav = styled.h2`
   font-family: 'Roboto Flex', sans-serif;
   font-weight: bold;
 `;
+
+export const MainNavImage = styled(Image)`
+  &.trending {
+    position: relative;
+    top: -5px;
+    left: 23px;
+  }
+
+  &.subscribe {
+    position: relative;
+    top: -6px;
+    left: 23px;
+  }
+  
+  &.recentPosts{
+    position: relative;
+    top: -5px;
+    left: 25px;
+  }
+`;
+
