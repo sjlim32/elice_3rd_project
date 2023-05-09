@@ -16,7 +16,7 @@ export const MainWrapper = styled.main`
 `;
 
 export const MainHeader = styled.div`
-  width: 800px;
+  width: 1000px;
   height: 100px;
   display: flex;
   flex-direction: row;

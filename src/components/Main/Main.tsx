@@ -1,6 +1,26 @@
+import { useState } from 'react';
 import { MainWrapper, MainHeader, MainNav, MainNavImage } from './main-styled'
+import { DropdownWrapper, DropdownHeader, DropdownListContainer
+, DropdownListItem } from './dropdown-styled';
+
+interface DropdownProps{
+  options: string[];
+}
 
 const Main = () => {
+  const [isOpen, setIsOpened] = useState<boolean>(false);
+  const [selectedOption, setSelectedOption] = useState<DropdownProps | null>(null);
+
+  const toggling = () => {
+    setIsOpened(!isOpen);
+  }
+
+  const onOptionClicked = (value: DropdownProps) => {
+    return () => {
+      setSelectedOption(value);
+      setIsOpened(false);
+    }
+  }
 
   return (
     <MainWrapper>
@@ -29,6 +49,11 @@ const Main = () => {
         height="23"
         />
         <MainNav>Recent Posts</MainNav>
+        <DropdownWrapper>
+          <DropdownHeader onClick={toggling}>
+            {selectedOption || ''}
+          </DropdownHeader>
+        </DropdownWrapper>
       </MainHeader>
     </MainWrapper>
   );
