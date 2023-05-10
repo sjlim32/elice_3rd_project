@@ -15,7 +15,7 @@ export const MainWrapper = styled.main`
   }  
 `;
 
-export const MainHeader = styled.div`
+export const SubHeader = styled.div`
   width: 1000px;
   height: 100px;
   display: flex;
@@ -44,6 +44,7 @@ export const MainNavImage = styled(Image)`
     position: relative;
     top: -1px;
     left: 23px;
+    margin-left: 5px;
   }
   
   &.recentPosts{
