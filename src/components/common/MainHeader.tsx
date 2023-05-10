@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { MainWrapper, SubHeader, MainNav, MainNavImage } from './main-styled'
+import { MainWrapper, SubHeader, MainNav, MainNavImage } from './mainHeader-styled'
 import { DropdownWrapper, DropdownHeader, DropdownListContainer
 , DropdownListItem } from './dropdown-styled';
 
@@ -10,6 +10,7 @@ interface DropdownProps{
 const MainHeader = () => {
     const [isOpen, setIsOpened] = useState<boolean>(false);
     const [selectedOption, setSelectedOption] = useState<DropdownProps | null>(null);
+
 
     const toggling = () => {
         setIsOpened(!isOpen);
