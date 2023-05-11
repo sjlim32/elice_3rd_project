@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const MainWrapper = styled.main`
   width: 100%;
@@ -39,19 +40,22 @@ export const MainNavImage = styled(Image)`
     top: -1px;
     left: 23px;
   }
-
-  &.subscribe {
-    position: relative;
-    top: -1px;
-    left: 23px;
-    margin-left: 5px;
-  }
   
   &.recentPosts{
     position: relative;
     top: -1px;
     left: 25px;
   }
+`;
+
+export const MainNavLink = styled(Link)`
+  &.trend {
+    cursor: pointer;
+  }
+
+  &.recent {
+    cursor: pointer;
+  }  
 `;
 
 

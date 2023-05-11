@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { MainWrapper, SubHeader, MainNav, MainNavImage } from './mainHeader-styled'
-import { DropdownWrapper, DropdownHeader, DropdownListContainer
-, DropdownListItem } from './dropdown-styled';
+import { MainWrapper, SubHeader, MainNav, MainNavImage, MainNavLink } from './mainHeader-styled'
+// import { DropdownWrapper, DropdownHeader, DropdownListContainer
+// , DropdownListItem } from './dropdown-styled';
 
 interface DropdownProps{
     options: string[];
@@ -9,19 +9,19 @@ interface DropdownProps{
 
 const MainHeader = () => {
     const [isOpen, setIsOpened] = useState<boolean>(false);
-    const [selectedOption, setSelectedOption] = useState<DropdownProps | null>(null);
+    // const [selectedOption, setSelectedOption] = useState<DropdownProps | null>(null);
 
 
-    const toggling = () => {
-        setIsOpened(!isOpen);
-    }
+    // const toggling = () => {
+    //     setIsOpened(!isOpen);
+    // }
 
-    const onOptionClicked = (value: DropdownProps) => {
-        return () => {
-        setSelectedOption(value);
-        setIsOpened(false);
-        }
-    }
+    // const onOptionClicked = (value: DropdownProps) => {
+    //     return () => {
+    //     setSelectedOption(value);
+    //     setIsOpened(false);
+    //     }
+    // }
 
     return (
             <MainWrapper>
@@ -33,15 +33,9 @@ const MainHeader = () => {
                     width="25"
                     height="25"
                     />
-                    <MainNav>Trending</MainNav>
-                    <MainNavImage
-                    className='subscribe'
-                    src="/images/Subscribe.png"
-                    alt="구독"
-                    width="23"
-                    height="23"
-                    />
-                    <MainNav>SubScribe</MainNav>
+                    <MainNavLink href="/" className='trend'>
+                        <MainNav>Trending</MainNav>
+                    </MainNavLink>
                     <MainNavImage
                     className='recentPosts'
                     src="/images/RecentPosts.png"
@@ -49,11 +43,9 @@ const MainHeader = () => {
                     width="23"
                     height="23"
                     />
-                    <MainNav>Recent Posts</MainNav>
-                    <DropdownWrapper>
-                    <DropdownHeader onClick={toggling}>
-                    </DropdownHeader>
-                    </DropdownWrapper>
+                    <MainNavLink href="/recent-posts">
+                        <MainNav>Recent Posts</MainNav>
+                    </MainNavLink>
                 </SubHeader>
             </MainWrapper>
     )
