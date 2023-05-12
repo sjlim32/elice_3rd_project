@@ -1,82 +1,42 @@
-// import axios, { AxiosResponse } from "axios";
-
-// // 현재 mock server api 주소임
-// const api = axios.create({
-//   baseURL: process.env.NEXT_PUBLIC_AXIOS_BASE_URL,
-//   // withCredentials: true,
-// });
-
-// interface Response<T> extends AxiosResponse {
-//   data: T;
-// }
-
-// async function get<T>(endpoint: string): Promise<Response<T>> {
-//   console.log(`GET 요청 : ${endpoint}`);
-
-//   try {
-//     const response = api.get(endpoint, {
-//       // headers: {
-//       //   Authorization: `Bearer ${localStorage.getItem("token")}`,
-//       // },
-//     })
-//     return response as Promise<Response<T>>;
-//   } catch (error) {
-//     console.error('GET 요청 ERROR', error)
-//     throw error
-//   }
-// }
-
-// async function post<T>(endpoint: string, data: unknown): Promise<Response<T>> {
-//   console.log(`POST 요청 : ${endpoint}`);
-
-//   return api.post(endpoint, data, {
-//     // headers: {
-//     //   "Content-Type": "application/json",
-//     //   Authorization: `Bearer ${localStorage.getItem("token")}`,
-//     // },
-//   }) as Promise<Response<T>>;
-// }
-
-// async function patch<T>(endpoint: string, data: unknown): Promise<Response<T>> {
-//   console.log(`PATCH 요청 : ${endpoint}`);
-
-//   return api.patch(endpoint, data, {
-//     // headers: {
-//     //   "Content-Type": "application/json",
-//     //   Authorization: `Bearer ${localStorage.getItem("token")}`,
-//     // },
-//   }) as Promise<Response<T>>;
-// }
-
-// async function del<T>(endpoint: string): Promise<Response<T>> {
-//   console.log(`DELETE 요청 : ${endpoint}`);
-
-//   return api.delete(endpoint, {
-//     // headers: {
-//     //   Authorization: `Bearer ${localStorage.getItem("token")}`,
-//     // },
-//   }) as Promise<Response<T>>;
-// }
-
-// export { api, get, post, patch, del as delete };
-
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
+import auth from '@/components/common/auth';
 
 const baseURL = process.env.NEXT_PUBLIC_AXIOS_BASE_URL;
 
+const user = auth.currentUser;
+
+interface CustomAxiosResponse<T> extends AxiosResponse<T> {
+  error?: string | null;
+}
+
 async function request<T>(
-  method: string,
-  endpoint: string,
-  data?: unknown
-): Promise<AxiosResponse<T>> {
-  console.log(`${method} 요청: ${endpoint}`);
+  config: AxiosRequestConfig
+): Promise<CustomAxiosResponse<T>> {
+  const {
+    method,
+    url: endpointUrl,
+    data,
+    headers = {},
+    ...restConfig
+  } = config;
+
+  console.log(`${method} 요청: ${endpointUrl}`);
 
   try {
+    if (user) {
+      const idToken = await user.getIdToken();
+      if (!headers['Authorization']) {
+        headers['Authorization'] = `Bearer ${idToken}`;
+      }
+    }
+
     const response = await axios.request<T>({
       method,
-      url: endpoint,
+      url: endpointUrl,
       baseURL,
+      headers,
       data,
+      ...restConfig,
     });
 
     return response;
@@ -86,26 +46,39 @@ async function request<T>(
   }
 }
 
- function get<T>(endpoint: string): Promise<AxiosResponse<T>> {
-  return request<T>("GET", endpoint);
-}
+type AxiosRequestConfigWithoutMethodAndUrl = Omit<
+  AxiosRequestConfig,
+  'method' | 'url'
+>;
 
- function post<T>(
+function get<T>(
   endpoint: string,
-  data: unknown
-): Promise<AxiosResponse<T>> {
-  return request<T>("POST", endpoint, data);
+  options?: AxiosRequestConfigWithoutMethodAndUrl
+): Promise<CustomAxiosResponse<T>> {
+  return request<T>({ method: 'GET', url: endpoint, ...options });
 }
 
- function patch<T>(
+function post<T>(
   endpoint: string,
-  data: unknown
-): Promise<AxiosResponse<T>> {
-  return request<T>("PATCH", endpoint, data);
+  data: unknown,
+  options?: AxiosRequestConfigWithoutMethodAndUrl
+): Promise<CustomAxiosResponse<T>> {
+  return request<T>({ method: 'POST', url: endpoint, data, ...options });
 }
 
- function del<T>(endpoint: string): Promise<AxiosResponse<T>> {
-  return request<T>("DELETE", endpoint);
+function patch<T>(
+  endpoint: string,
+  data: unknown,
+  options?: AxiosRequestConfigWithoutMethodAndUrl
+): Promise<CustomAxiosResponse<T>> {
+  return request<T>({ method: 'PATCH', url: endpoint, data, ...options });
+}
+
+function del<T>(
+  endpoint: string,
+  options?: AxiosRequestConfigWithoutMethodAndUrl
+): Promise<CustomAxiosResponse<T>> {
+  return request<T>({ method: 'DELETE', url: endpoint, ...options });
 }
 
 export { get, post, patch, del as delete };

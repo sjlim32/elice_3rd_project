@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import axios from 'axios'
 import {
 	Container,
 	Form,
@@ -8,33 +9,49 @@ import {
 	Button,
 	InputWrapper,
 	SignupTitle,
-	InputTitle
+	InputTitle,
+	Bio
 } from './ModifyInfo-styled';
 
 export const ModifyInfo = () => {
-	const [ name, setName ] = useState<string>('엘리스')
 	const [ email, setEmail ] = useState<string>('elice@rabbit.com')
-	const [ phone, setPhone ] = useState<string>('010-1234-5678')
 	const [ password, setPassword ] = useState<string>('123123')
+	const [ nickname, setNickname] = useState<string>('토끼토끼')
+	const [ blogTitle, setBlogTitle ] = useState<string>('토끼굴')
+	const [ bio, setBio ] = useState<string>('설명입니다.')
 
 	const router = useRouter()
 
 	useEffect(() => {
-		// const res = axios.get(``)
+		// const res = axios.get(`/api/v1/user/:id`)
 
-		// setName(res.data.name)
 		// setEmail(res.data.email)
-		// setPhone(res.data.phone)
 		// setPassword(res.data.password)
-		// setName(res.data.name)
+		// setNickname(res.data.nickName)
+		// setBlogTitle(res.data.blogTitle)
+		// setBio(res.data.bio)
 	}, [])
 
 	// ! password, passwordConfirm 일치 확인 구현
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
 			event.preventDefault();
 			// 회원가입 로직 구현
-			console.log("Signup!");
+			try {
+				// const res = await axios.patch(`/api/v1/user/:id`, {
+					// email: email,
+        //   password: password,
+        //   nickname: nickname,
+        //   address: {
+        //     zonecode,
+        //     address,
+        //     detailAddress,
+        //   },
+        // });
+				console.log("Signup!");
+			} catch (error) {
+				
+			}
 	};
 	
 	const handleCancel = () => {
@@ -48,16 +65,18 @@ export const ModifyInfo = () => {
 					<Form onSubmit={handleSubmit}>
 							<SignupTitle>회원 정보 수정</SignupTitle>
 							<InputWrapper>
-									<InputTitle>이름</InputTitle>
-									<Input type="text" placeholder={name} required />
 									<InputTitle>이메일</InputTitle>
 									<Input type="email" placeholder={email} required />
-									<InputTitle>전화번호</InputTitle>
-									<Input type="phone" placeholder={phone} required/>
 									<InputTitle>비밀번호</InputTitle>
 									<Input type="password" placeholder="●●●●●●●" required />
 									<InputTitle>비밀번호 확인</InputTitle>
 									<Input type="password" placeholder="●●●●●●●" required />
+									<InputTitle>닉네임</InputTitle>
+									<Input type="text" placeholder={nickname} required />
+									<InputTitle>블로그 명</InputTitle>
+									<Input type="text" placeholder={blogTitle} required />
+									<InputTitle>블로그 소개</InputTitle>
+									<Bio name="text" placeholder={bio} required />
 							</InputWrapper>
 							<ButtonWrapper>
 								<Button className='cancel' onClick={handleCancel}>수정 취소</Button>

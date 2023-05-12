@@ -16,7 +16,6 @@ export default memo(function PostRouter(props: RouteProps) {
 
 const LinkWrapper = styled(Link)`
 	&:hover{
-    background-color : lightgray;
-    color : yellow
+    color : green
 	}
 `
