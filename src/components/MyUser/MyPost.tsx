@@ -1,10 +1,14 @@
-import { useState, useEffect, useRef, ChangeEvent } from 'react'
+import { useState, useEffect, useRef, ChangeEvent, MouseEvent } from 'react'
 // import { useRecoilState, useRecoilValue } from 'recoil';
 // import { useRouter } from 'next/router';
+import axios from 'axios';
 import Pagination from 'react-js-pagination';
 import {
 	Container,
 	TopDiv,
+	MainWrap,
+	MainDiv,
+	SideDiv,
 	SearchDiv,
 	SearchInput,
 	SearchBtn,
@@ -25,6 +29,7 @@ const postsMockList: any[] = [{
 	"title": "제목1",
 	"content": "내용1",
 	"summary": "요약1",
+	"views": "999",	
 	"updatedAt": "2023-04-24T03:10:52.668Z",
 	"createdAt": "2023-04-24T03:10:52.668Z"
 }, {
@@ -34,14 +39,14 @@ const postsMockList: any[] = [{
 	"title": "제목2",
 	"content": "내용2",
 	"summary": "요약2",
+	"views": "100",
 	"updatedAt": "2023-04-25T03:10:52.668Z",
 	"createdAt": "2023-04-25T03:10:52.668Z"
 }]
 
 const MyPost = () => {
-	const [profile, setProfile] = useState<string>('설명글')
-	const [img, setImage] = useState<string>('/')
 	const [postsList, setPostsList] = useState(postsMockList)
+	const [category, setCategory] = useState<string>('All')
 	const search: any = useRef('')
 	const inputRef: any = useRef()
 
@@ -55,7 +60,8 @@ const MyPost = () => {
 
 	// * 최초 게시글 목록 렌더
 	const FirstRender = async () => {
-		// const result = await axios.get(url)
+		// const res = await axios.get('/api/v1/posts')
+		// setPostsList(res.data)
 	}
 
 	useEffect(() => {
@@ -68,23 +74,50 @@ const MyPost = () => {
 		search.current = e.target.value
 	}
 
-	const handleSearch = () => {
+	const handleSearch = async() => {
 		try {
-			// const res = await axios.get(url, search.current)
-			// setPostList(res.data)
-			console.log(search.current)
+			// const res = await axios.get('/api/v1/posts')
+			// const searchingPosts = res.data.filter((post) =>
+      //       post.title.includes(search)
+      //     );
+      //     setPosts(filterdPosts);
 		} catch (error) {
 			console.error("에러", error)
 		}
 	}
 
+	// * 카테고리 설정
+
+	const handleCategory = (e: MouseEvent<HTMLButtonElement>) => {
+		setCategory(e.currentTarget.value)
+	}
+
+	const getCategoryPosts = async() => {
+		try {
+		// const res = await axios.get(`/api/v1//posts/category/{category}`)
+		// setPostList(res.data)
+			console.log(category)
+		} catch (error) {
+			console.error("에러", error)
+		}
+	}
+
+	useEffect(() => {
+		category === 'All'
+		? FirstRender()
+		: getCategoryPosts()
+	}, [category])
+
 	// * pagination
   const handlePageChange = async (page: number) => {
-    if (currPage === page)
-      return;
-    setCurrPage(page);
-    setRender(true);
-    
+		try {
+			if (currPage === page)
+				return;
+			setCurrPage(page);
+			setRender(true);
+		} catch (error) {
+			console.error("에러", error)
+		}
   }
 
   const rending = async () => {
@@ -109,33 +142,51 @@ const MyPost = () => {
 					<SearchBtn onClick={() => handleSearch()}>검색</SearchBtn>
 				</SearchDiv>
 			</TopDiv>
-
-			{
-				postsList.map((post, idx) => {
-					return (
-						<ContentDiv key={post.id}>
-							<HeaderWrap>
-								<PostThumbnail alt={'썸네일'}></PostThumbnail>
-								<PostRouter link={post.id} title={post.title} />
-								<div>{post.summary}</div>
-							</HeaderWrap>
-							<FooterWrap>
-								<div>{post.category}</div>
-								<div>{post.createdAt}</div>
-							</FooterWrap>
-						</ContentDiv>
-					)
-				}
-				)}
-				<Pagination
-          activePage={currPage}
-          itemsCountPerPage={perPage}
-          totalItemsCount={totalPage * perPage}
-          pageRangeDisplayed={totalPage}
-          prevPageText={"<"}
-          nextPageText={">"}
-          onChange={handlePageChange}
-        />
+			<MainWrap>
+				<SideDiv>
+					<div id="cate-line">Category</div>{
+						<button value={"All"} onClick={(e) => handleCategory(e)}>All</button>
+					}
+					{
+						postsList.map((post, idx) => {
+							return (
+								<button value={post.category} onClick={(e) => handleCategory(e)}>
+									{post.category}
+								</button>
+							)
+						})
+					}
+				</SideDiv>
+				<MainDiv>
+				{
+					postsList.map((post, idx) => {
+						return (
+							<ContentDiv key={post.id}>
+								<HeaderWrap>
+									<PostThumbnail alt={'썸네일'}></PostThumbnail>
+									<PostRouter link={post.id} title={post.title} />
+									<div>{post.summary}</div>
+								</HeaderWrap>
+								<FooterWrap>
+									<div>작성일 : {post.createdAt.split('T')[0]}</div>
+									<div>카테고리 : {post.category}</div>
+									<div>조회수 : {post.views}</div>
+								</FooterWrap>
+							</ContentDiv>
+						)
+					}
+					)}
+					</MainDiv>
+				</MainWrap>	
+					<Pagination
+						activePage={currPage}
+						itemsCountPerPage={perPage}
+						totalItemsCount={totalPage * perPage}
+						pageRangeDisplayed={totalPage}
+						prevPageText={"<"}
+						nextPageText={">"}
+						onChange={handlePageChange}
+					/>
 		</Container >
 	);
 };
