@@ -51,7 +51,7 @@ const Header = () => {
   return (
     <HeaderWrapper>
       <Home href={'/'}>
-        <Title>ThreeLines</Title>
+        <Title>One-Line</Title>
       </Home>
 
       <Nav>

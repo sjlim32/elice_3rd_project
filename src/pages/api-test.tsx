@@ -1,4 +1,5 @@
 import * as API from '@/utils/api';
+import axios from 'axios';
 
 const apiTest = () => {
   interface jsonType {
@@ -9,7 +10,8 @@ const apiTest = () => {
   }
 
   const apiTest = async (): Promise<jsonType> => {
-    const response = await API.get<jsonType>('/posts');
+    // const response = await API.get<jsonType>('/posts');
+    const response = await axios.get('http://3.39.79.138/api/v1/posts');
     return response.data;
   };
   const testAPI = async () => {

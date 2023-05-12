@@ -8,8 +8,9 @@ import {
   Button,
 } from './login-styled';
 import { signInWithEmailAndPassword, getIdToken, signOut } from 'firebase/auth';
-import axios from 'axios';
 import auth from '../common/auth';
+import * as API from '@/utils/api';
+import axios from 'axios';
 
 const Login = () => {
   const [email, setEmail] = useState<string>('');
@@ -26,10 +27,9 @@ const Login = () => {
         password
       );
       const idToken = await userCredential.user.getIdToken();
-
       const response = await axios.post(
-        'http://localhost:3001/api/v1/auth/login',
-        {},
+        'http://localhost:80/api/v1/auth/login',
+        { email, password },
         {
           headers: {
             Authorization: `Bearer ${idToken}`,
@@ -47,7 +47,7 @@ const Login = () => {
         // 백엔드 검증 실패
         // 로그인 실패 처리 및 오류 메시지 표시
         await signOut(auth); // Firebase에서 로그아웃
-        alert('로그인 실패: ' + response.data.errorMessage);
+        console.error('로그인 실패: ' + response.data.errorMessage);
       }
     } catch (error) {
       console.log(error);
