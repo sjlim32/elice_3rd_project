@@ -3,25 +3,18 @@ import { MainWrapper, SubHeader, MainNav, MainNavImage, MainNavLink } from './ma
 // import { DropdownWrapper, DropdownHeader, DropdownListContainer
 // , DropdownListItem } from './dropdown-styled';
 
-interface DropdownProps{
-    options: string[];
-}
+// interface DropdownProps{
+//     options: string[];
+// }
 
 const MainHeader = () => {
-    const [isOpen, setIsOpened] = useState<boolean>(false);
-    // const [selectedOption, setSelectedOption] = useState<DropdownProps | null>(null);
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const [activeLink, setActiveLink] = useState('');
 
-
-    // const toggling = () => {
-    //     setIsOpened(!isOpen);
-    // }
-
-    // const onOptionClicked = (value: DropdownProps) => {
-    //     return () => {
-    //     setSelectedOption(value);
-    //     setIsOpened(false);
-    //     }
-    // }
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        setActiveLink('');
+    } 
 
     return (
             <MainWrapper>
