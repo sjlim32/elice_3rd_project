@@ -1,33 +1,42 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import auth from '@/components/common/auth';
 
 const baseURL = process.env.NEXT_PUBLIC_AXIOS_BASE_URL;
 
 const user = auth.currentUser;
 
+interface CustomAxiosResponse<T> extends AxiosResponse<T> {
+  error?: string | null;
+}
+
 async function request<T>(
-  method: string,
-  endpoint: string,
-  data?: unknown
-): Promise<AxiosResponse<T>> {
-  console.log(`${method} 요청: ${endpoint}`);
+  config: AxiosRequestConfig
+): Promise<CustomAxiosResponse<T>> {
+  const {
+    method,
+    url: endpointUrl,
+    data,
+    headers = {},
+    ...restConfig
+  } = config;
+
+  console.log(`${method} 요청: ${endpointUrl}`);
 
   try {
-    let headers = {};
-
     if (user) {
       const idToken = await user.getIdToken();
-      headers = {
-        Authorization: `Bearer ${idToken}`,
-      };
+      if (!headers['Authorization']) {
+        headers['Authorization'] = `Bearer ${idToken}`;
+      }
     }
 
     const response = await axios.request<T>({
       method,
-      url: endpoint,
+      url: endpointUrl,
       baseURL,
       headers,
       data,
+      ...restConfig,
     });
 
     return response;
@@ -37,20 +46,39 @@ async function request<T>(
   }
 }
 
-function get<T>(endpoint: string): Promise<AxiosResponse<T>> {
-  return request<T>('GET', endpoint);
+type AxiosRequestConfigWithoutMethodAndUrl = Omit<
+  AxiosRequestConfig,
+  'method' | 'url'
+>;
+
+function get<T>(
+  endpoint: string,
+  options?: AxiosRequestConfigWithoutMethodAndUrl
+): Promise<CustomAxiosResponse<T>> {
+  return request<T>({ method: 'GET', url: endpoint, ...options });
 }
 
-function post<T>(endpoint: string, data: unknown): Promise<AxiosResponse<T>> {
-  return request<T>('POST', endpoint, data);
+function post<T>(
+  endpoint: string,
+  data: unknown,
+  options?: AxiosRequestConfigWithoutMethodAndUrl
+): Promise<CustomAxiosResponse<T>> {
+  return request<T>({ method: 'POST', url: endpoint, data, ...options });
 }
 
-function patch<T>(endpoint: string, data: unknown): Promise<AxiosResponse<T>> {
-  return request<T>('PATCH', endpoint, data);
+function patch<T>(
+  endpoint: string,
+  data: unknown,
+  options?: AxiosRequestConfigWithoutMethodAndUrl
+): Promise<CustomAxiosResponse<T>> {
+  return request<T>({ method: 'PATCH', url: endpoint, data, ...options });
 }
 
-function del<T>(endpoint: string): Promise<AxiosResponse<T>> {
-  return request<T>('DELETE', endpoint);
+function del<T>(
+  endpoint: string,
+  options?: AxiosRequestConfigWithoutMethodAndUrl
+): Promise<CustomAxiosResponse<T>> {
+  return request<T>({ method: 'DELETE', url: endpoint, ...options });
 }
 
 export { get, post, patch, del as delete };
