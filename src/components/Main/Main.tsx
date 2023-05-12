@@ -1,4 +1,5 @@
-import { MainWrapper, MainHeader, MainNav, MainNavImage } from './main-styled';
+import { MainWrapper, MainHeader, MainNav, MainNavImage } from './main-styled'
+import Link from 'next/link'
 
 const Main = () => {
   return (
@@ -30,6 +31,9 @@ const Main = () => {
         <MainNav>Recent Posts</MainNav>
         <div></div>
       </MainHeader>
+        <Link href="/my-post">UserPage</Link>
+        <Link href="/other-post">PostPage</Link>
+        <Link href="/modify-info">modifyPage</Link>
     </MainWrapper>
   );
 };
