@@ -1,21 +1,50 @@
-import { RecentPostsWrapper, RecentPost } from './recentPosts-styled';
+import { RecentPostsWrapper, RecentPost, PostThumbnail } from './recentPosts-styled';
 
 const RecentPosts = () => {
 
     return (
         <>
-            <p>posts</p>
             <RecentPostsWrapper>
-                <RecentPost>post1</RecentPost>
-                <RecentPost>post2</RecentPost>
-                <RecentPost>post3</RecentPost>
-                <RecentPost>post4</RecentPost>
-                <RecentPost>post5</RecentPost>
-                <RecentPost>post6</RecentPost>
-                <RecentPost>post7</RecentPost>
-                <RecentPost>post8</RecentPost>
-                <RecentPost>post9</RecentPost>
-                <RecentPost>post10</RecentPost>
+                <RecentPost>
+                    recent post1
+                    <PostThumbnail />
+                </RecentPost>
+                <RecentPost>
+                    recent post2
+                    <PostThumbnail />
+                </RecentPost>
+                <RecentPost>
+                    recent post3
+                    <PostThumbnail />
+                </RecentPost>
+                <RecentPost>
+                    recent post4
+                    <PostThumbnail />
+                </RecentPost>
+                <RecentPost>
+                    recent post5
+                    <PostThumbnail />
+                </RecentPost>
+                <RecentPost>
+                    recent post6
+                    <PostThumbnail />
+                </RecentPost>
+                <RecentPost>
+                    recent post7
+                    <PostThumbnail />
+                </RecentPost>
+                <RecentPost>
+                    recent post8
+                    <PostThumbnail />
+                </RecentPost>
+                <RecentPost>
+                    recent post9
+                    <PostThumbnail />
+                </RecentPost>
+                <RecentPost>
+                    recent post10
+                    <PostThumbnail />
+                </RecentPost>
             </RecentPostsWrapper>
         </>
     )

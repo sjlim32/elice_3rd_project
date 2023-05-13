@@ -10,6 +10,7 @@ import {
   InputTitle,
   Bio,
 } from './join-styled';
+import * as API from '@/utils/api';
 
 interface SignupData {
   email: string;
