@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const MainWrapper = styled.main`
   width: 100%;
@@ -15,8 +16,8 @@ export const MainWrapper = styled.main`
   }  
 `;
 
-export const MainHeader = styled.div`
-  width: 800px;
+export const SubHeader = styled.div`
+  width: 1000px;
   height: 100px;
   display: flex;
   flex-direction: row;
@@ -36,20 +37,25 @@ export const MainNav = styled.h2`
 export const MainNavImage = styled(Image)`
   &.trending {
     position: relative;
-    top: -5px;
-    left: 23px;
-  }
-
-  &.subscribe {
-    position: relative;
-    top: -6px;
+    top: -1px;
     left: 23px;
   }
   
   &.recentPosts{
     position: relative;
-    top: -5px;
+    top: -1px;
     left: 25px;
   }
 `;
+
+export const MainNavLink = styled(Link)`
+  &.trend {
+    cursor: pointer;
+  }
+
+  &.recent {
+    cursor: pointer;
+  }  
+`;
+
 
