@@ -31,6 +31,7 @@ const Login = () => {
         password
       );
       const idToken = await userCredential.user.getIdToken();
+      console.log('token', idToken);
       const response = await API.post<LoginType>(
         '/auth/login',
         { email, password },
