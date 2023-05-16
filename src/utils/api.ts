@@ -1,9 +1,39 @@
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
 import auth from '@/components/common/auth';
+// import firebase from 'firebase/app';
+// import 'firebase/auth';
+import type { User } from 'firebase/auth';
 
-const baseURL = process.env.NEXT_PUBLIC_AXIOS_BASE_URL;
+const api = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_AXIOS_BASE_URL,
+});
 
-const user = auth.currentUser;
+let userReadyPromise: Promise<User | null>;
+
+const getUser = async (): Promise<User | null> => {
+  return new Promise((resolve) => {
+    if (auth.currentUser) {
+      resolve(auth.currentUser);
+    } else {
+      auth.onAuthStateChanged((user) => {
+        resolve(user);
+      });
+    }
+  });
+};
+
+userReadyPromise = getUser();
+
+api.interceptors.request.use(async (config) => {
+  const user = await userReadyPromise;
+  if (user) {
+    const idToken = await user.getIdToken(true);
+    config.headers['Authorization'] = `Bearer ${idToken}`;
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
 
 interface CustomAxiosResponse<T> extends AxiosResponse<T> {
   error?: string | null;
@@ -12,36 +42,14 @@ interface CustomAxiosResponse<T> extends AxiosResponse<T> {
 async function request<T>(
   config: AxiosRequestConfig
 ): Promise<CustomAxiosResponse<T>> {
-  const {
-    method,
-    url: endpointUrl,
-    data,
-    headers = {},
-    ...restConfig
-  } = config;
-
-  console.log(`${method} 요청: ${endpointUrl}`);
+  console.log(`${config.method} 요청: ${config.url}`);
 
   try {
-    if (user) {
-      const idToken = await user.getIdToken();
-      if (!headers['Authorization']) {
-        headers['Authorization'] = `Bearer ${idToken}`;
-      }
-    }
-
-    const response = await axios.request<T>({
-      method,
-      url: endpointUrl,
-      baseURL,
-      headers,
-      data,
-      ...restConfig,
-    });
-
+    const response = await api.request<T>(config);
+    console.log('options : ', config);
     return response;
   } catch (error) {
-    console.error(`${method} 요청 ERROR`, error);
+    console.error(`${config.method} 요청 ERROR`, error);
     throw error;
   }
 }
