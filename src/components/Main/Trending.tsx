@@ -15,38 +15,30 @@ interface Data{
 }
 
 const Trending = () => {
-  const [data, setData] = useState<Data[]>([]);
-  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [posts, setPosts] = useState<Data[]>([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [hasMore, setHasMore] = useState(false);
 
-  const getData = async () => {
-    try{
-      const response = await API.get<Data[]>('/posts/trending');
-      if(response.data.length > 0){
-        console.log(response.data);
-        setData(prevData => [...prevData, ...response.data]);
-      } else{
-        setHasMore(false);
+  useEffect(() => {
+    const loadPosts = async () => {
+      setLoading(true);
+      try{
+        const response = await API.get<Data[]>('posts/trending');
+        const data = response.data;
+        setPosts(prevPosts => [...prevPosts, ...data]);
+        setHasMore(data.length > 0);
+        setLoading(false);
       }
-      
-    }catch(error){
-      console.error(error);
-    }
-  };
+      catch(error){
+        setLoading(false);
+      }
+    };
+    
+    loadPosts();
+  }, [page]);
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const handleScroll = () => {
-    if(window.innerHeight + document.documentElement.scrollTop !==
-      document.documentElement.offsetHeight || !hasMore) return;
-      getData();
-  };
-
-  useEffect(() => {
-    addEventListener('scroll', handleScroll);
-    return () => removeEventListener('scroll', handleScroll);
-  }, [hasMore]);
 
   return (
       <>
