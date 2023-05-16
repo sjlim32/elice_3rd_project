@@ -11,7 +11,6 @@ import { signInWithEmailAndPassword, getIdToken, signOut } from 'firebase/auth';
 import auth from '../common/auth';
 import * as API from '@/utils/api';
 
-
 type LoginType = {
   email: string;
   password: string;

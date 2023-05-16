@@ -22,7 +22,7 @@ export const SubHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: left;
-  font-size: 25px;
+  font-size: 20px;
 `;
 
 export const MainNav = styled.div`
