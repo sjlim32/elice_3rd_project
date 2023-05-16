@@ -4,7 +4,7 @@ export const TrendingPostsWrapper = styled.div`
     display: grid;
     position: relative;
     left: 10px;
-    max-width: 1900px;
+    max-width: 360vw;
     height: 700px;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: 300px 300px;

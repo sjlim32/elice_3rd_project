@@ -22,10 +22,10 @@ export const SubHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: left;
-  font-size: 20px;
+  font-size: 25px;
 `;
 
-export const MainNav = styled.h2`
+export const MainNav = styled.div`
   position: relative;
   padding-left: 30px;
   cursor: pointer;
