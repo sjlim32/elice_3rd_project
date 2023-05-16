@@ -10,7 +10,7 @@ import {
 import { signInWithEmailAndPassword, getIdToken, signOut } from 'firebase/auth';
 import auth from '../common/auth';
 import * as API from '@/utils/api';
-import axios from 'axios';
+
 
 type LoginType = {
   email: string;
@@ -32,6 +32,7 @@ const Login = () => {
         password
       );
       const idToken = await userCredential.user.getIdToken();
+      console.log('token', idToken);
       const response = await API.post<LoginType>(
         '/auth/login',
         { email, password },
@@ -41,6 +42,7 @@ const Login = () => {
           },
         }
       );
+
       console.log('Sent request headers:', response.config.headers);
       console.log('response:', response.data);
 
