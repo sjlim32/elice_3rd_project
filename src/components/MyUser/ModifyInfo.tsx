@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import axios from 'axios'
+import * as API from '@/utils/api';
 import {
 	Container,
 	Form,
@@ -23,13 +23,13 @@ export const ModifyInfo = () => {
 	const router = useRouter()
 
 	useEffect(() => {
-		// const res = axios.get(`/api/v1/user/:id`)
+		const res = API.get(`/user/:${id}`)
 
-		// setEmail(res.data.email)
-		// setPassword(res.data.password)
-		// setNickname(res.data.nickName)
-		// setBlogTitle(res.data.blogTitle)
-		// setBio(res.data.bio)
+		setEmail(res.data.email)
+		setPassword(res.data.password)
+		setNickname(res.data.nickName)
+		setBlogTitle(res.data.blogTitle)
+		setBio(res.data.bio)
 	}, [])
 
 	// ! password, passwordConfirm 일치 확인 구현

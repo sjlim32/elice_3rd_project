@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil';
-// import { useRouter } from 'next/router';
+import { useRecoilState, useRecoilValue } from 'recoil'
+// import { useRouter } from 'next/router'
+import * as API from '@/utils/api';
 import { Container, NameDiv} from './MyUser-styled'
-// import { testState } from '@/store/test';
+// import { testState } from '@/store/test'
 import Btn from '../common/my_page/button'
 
 const MyUser = () => {
-  // const [test, setTest] = useRecoilState(testState);
+  // const [test, setTest] = useRecoilState(testState)
   const [user, setUser] = useState<string>('XYZ')
 
   useEffect(() => {
