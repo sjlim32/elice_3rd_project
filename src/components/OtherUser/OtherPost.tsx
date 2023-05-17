@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, ChangeEvent } from 'react'
 // import { useRecoilState, useRecoilValue } from 'recoil';
 // import { useRouter } from 'next/router';
-import axios from 'axios';
+import * as API from '@/utils/api';
 import Pagination from 'react-js-pagination';
 import {
 	Container,
@@ -61,10 +61,14 @@ const OtherPost = () => {
 
   const params = { page:currPage, perPage: perPage}
 
+	const nickname = 
+
 // * 최초 게시글 목록 렌더
 	const FirstRender = async () => {
-		// const res = await axios.get('/posts')
-		// setPostsList(res.data)
+		const res = await API.get('/posts',{ 
+			params: { nickname: {nickname} } 
+			} )
+		setPostsList(res.data)
 	}
 
 	useEffect(() => {
