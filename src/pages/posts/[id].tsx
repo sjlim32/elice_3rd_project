@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import axios from 'axios';
+import * as api from '@/utils/api';
 import React, { useEffect, useState } from 'react'
 import auth from '@/components/common/auth';
 import { useRouter } from "next/router";
@@ -23,27 +24,6 @@ const Post = styled.div`
   width: 40%;
   margin: 0 auto;
   padding: 3em 0;
-`;
-
-const MorePosts = styled.div`
-  width: 40%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const MorePost = styled.div`
-  padding: 1em;
-  font-size: 0.7rem;
-  color: gray;
-  background-color: #e9ecef;
-  border-radius: 10%;
-`;
-
-const MorePostTitle = styled.div`
-  padding: 0.4em 0;
-  font-size: 1rem;
-  color: black;
 `;
 
 const CommentInputForm = styled.form`
@@ -69,6 +49,11 @@ const Comment = styled.div`
   width: 40%;
   margin: 1em auto;
   font-size: 1rem;
+`;
+
+const UpdateComment = styled.input`
+  border: None;
+  border-bottom: 1px solid black;
 `;
 
 interface CommentFormValue {
@@ -110,24 +95,44 @@ export default function Posts() {
   const [Postdata, setPostdata] = useState<PostDetail>({})
 
   useEffect(() => {
-    getPost()
     setId(String(router.query.id))
+    getPost()
+    console.log(user)
   }, []);
 
   const getPost = async () => {
-    const response = await axios.get(`http://3.39.79.138/api/v1/posts/${Id}`);
+    const response = await axios.get(`http://3.39.79.138/api/v1/posts/1`);
     console.log(response.data.data)
     setPostdata(response.data.data)
   };
 
   const onCommentSubmitHandler: SubmitHandler<CommentFormValue> = async (data) => {
     try {
-        await axios.post(`http://3.39.79.138/api/v1/comments/${Id}`, data);
+        await api.post(`/comments/${Id}`, data);
         // window.location.replace("/msg")
     } catch (error : any) {
         alert(error);
     }
   };
+
+  const deleteComment = async (commentId: number)=>{
+    try {
+        await api.delete(`/comments/${commentId}`);
+        // window.location.replace("/msg")
+    } catch (error : any) {
+        alert(error);
+    }
+  };
+
+  // const updateComment = async (commentId, data)=>{
+  //   try {
+  //       await api.patch(`/comments/${data.commentId}`, data);
+  //       // window.location.replace("/msg")
+  //   } catch (error : any) {
+  //       alert(error);
+  //   }
+  // };
+
 
   return (
     <>
@@ -145,21 +150,33 @@ export default function Posts() {
         <button>Send</button>
       </CommentInputForm>
 
-      <div>
-        <CommentAuthor>{Postdata.Comments[0].User.nickname} 
-          <div style={{color: "gray", padding: "1em 0", fontSize: "0.5rem"}}>
-            {new Date(Postdata.Comments[0].createdAt).toString().substring(0, 21)} · 
-            <span style={{color: "blue"}}>수정</span> · 
-            <span style={{color: "red"}}>삭제</span>
-          </div>
-        </CommentAuthor>
-        <Comment>{Postdata.Comments[0].content}</Comment>
-      </div>
+      {
+        Postdata.Comments.map((comment) => {
+            return(
+              <div>
+                <CommentAuthor>{comment.User.nickname} 
+                  <div style={{color: "gray", padding: "1em 0", fontSize: "0.5rem"}}>
+                    {new Date(comment.createdAt).toString().substring(0, 21)}
+                    {
+                    user.displayName == comment.User.nickname ?
+                    <>
+                      <span style={{color: "blue"}}> · 수정 · </span>
+                      <span onClick={() => deleteComment(comment.id)} style={{color: "red"}}>삭제</span>
+                    </> : null
+                    }
+                  </div>
+                </CommentAuthor>
+                {
+                user.displayName == comment.User.nickname ?
+                <Comment>
+                  <UpdateComment placeholder={comment.content}></UpdateComment>
+                </Comment> :
+                <Comment>{comment.content}</Comment>
+                }
+              </div>                           
+            )
+        })
+      }
     </>
   )
 }
-
-      {/* <MorePosts>
-        <MorePost>Prev Post <MorePostTitle>Prev title blah blah</MorePostTitle></MorePost>
-        <MorePost>Next Post <MorePostTitle>Next title blah blah</MorePostTitle></MorePost>
-      </MorePosts> */}
