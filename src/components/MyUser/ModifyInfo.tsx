@@ -15,11 +15,11 @@ import {
 } from './ModifyInfo-styled';
 
 export const ModifyInfo = () => {
-	const [ email, setEmail ] = useState<string>('elice@rabbit.com')
+	const [ email, setEmail ] = useState<string>('이메일')
 	const [ password, setPassword ] = useState<string>('123123')
-	const [ nickname, setNickname] = useState<string>('토끼토끼')
-	const [ blogTitle, setBlogTitle ] = useState<string>('토끼굴')
-	const [ bio, setBio ] = useState<string>('설명입니다.')
+	const [ nickname, setNickname] = useState<string>('별명')
+	const [ blogTitle, setBlogTitle ] = useState<string>('블로그 제목')
+	const [ bio, setBio ] = useState<string>('블로그 설명')
 
 	const router = useRouter()
 
@@ -44,16 +44,13 @@ export const ModifyInfo = () => {
 			event.preventDefault();
 			// 회원가입 로직 구현
 			try {
-				// const res = await axios.patch(`/api/v1/user/:id`, {
-					// email: email,
-        //   password: password,
-        //   nickname: nickname,
-        //   address: {
-        //     zonecode,
-        //     address,
-        //     detailAddress,
-        //   },
-        // });
+				const res = API.patch(`/user`, {
+					email: email,
+          password: password,
+          nickname: nickname,
+					blogTitle: blogTitle,
+					bio: bio
+        });
 				console.log("Signup!");
 			} catch (error) {
 				
