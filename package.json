@@ -14,6 +14,7 @@
     "@types/node": "18.15.11",
     "@types/react": "18.0.37",
     "@types/react-dom": "18.0.11",
+    "@types/react-infinite-scroll-component": "^5.0.0",
     "axios": "^1.4.0",
     "codemirror": "^6.0.1",
     "eslint": "8.38.0",
