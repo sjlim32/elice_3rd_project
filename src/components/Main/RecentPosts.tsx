@@ -1,51 +1,61 @@
+import { useState, useEffect } from 'react';
 import { RecentPostsWrapper, RecentPost, PostThumbnail } from './recentPosts-styled';
+import * as API from '@/utils/api';
+import InfiniteScroll from 'react-infinite-scroll-component';
+
+interface Data{
+    title: string;
+    content: string;
+    summary: string;
+    views: number;
+    user: {nickname: string};
+    createdAt: Date;
+    updatedAt: Date;
+    deletedAt?: Date;
+}
 
 const RecentPosts = () => {
+    const [posts, setPosts] = useState<Data[]>([]);
+    const [hasMore, setHasMore] = useState<boolean>(false);
+
+    const loadPosts = async () => {
+        try{
+            const response = await API.get<Data[]>('/posts/recent');
+            const data = response.data;
+
+            setPosts(prevPosts => [...prevPosts, ...data]);
+            setHasMore(data.length > 0);
+        }
+        catch(error){
+            alert(error);
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        loadPosts();
+    },[]);
 
     return (
         <>
-            <RecentPostsWrapper>
-                <RecentPost>
-                    recent post1
-                    <PostThumbnail />
-                </RecentPost>
-                <RecentPost>
-                    recent post2
-                    <PostThumbnail />
-                </RecentPost>
-                <RecentPost>
-                    recent post3
-                    <PostThumbnail />
-                </RecentPost>
-                <RecentPost>
-                    recent post4
-                    <PostThumbnail />
-                </RecentPost>
-                <RecentPost>
-                    recent post5
-                    <PostThumbnail />
-                </RecentPost>
-                <RecentPost>
-                    recent post6
-                    <PostThumbnail />
-                </RecentPost>
-                <RecentPost>
-                    recent post7
-                    <PostThumbnail />
-                </RecentPost>
-                <RecentPost>
-                    recent post8
-                    <PostThumbnail />
-                </RecentPost>
-                <RecentPost>
-                    recent post9
-                    <PostThumbnail />
-                </RecentPost>
-                <RecentPost>
-                    recent post10
-                    <PostThumbnail />
-                </RecentPost>
-            </RecentPostsWrapper>
+            <InfiniteScroll
+            dataLength={posts.length}
+            next={loadPosts}
+            hasMore={hasMore}
+            loader={<h3>로딩중...</h3>}
+            endMessage={
+                <p style={{textAlign: 'center'}}>
+                    끝!
+                </p>
+            }
+            >
+                {posts.map((item: Data, index: number) => (
+                    <RecentPostsWrapper key={index}>
+                    <PostThumbnail/>
+                    <RecentPost>{item.views}</RecentPost>
+                    </RecentPostsWrapper>
+                ))}
+            </InfiniteScroll>
         </>
     )
 }
