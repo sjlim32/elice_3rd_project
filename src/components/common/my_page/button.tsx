@@ -14,7 +14,7 @@ export default memo(function Btn(props: BtnProps) {
 
   const handleClick = async () => {
     if (props.value === '회원탈퇴') {
-      const res = await API.delete(`/user/${id}`)
+      const res = await API.delete(`/user`)
       alert(props.alert)
       router.push(props.onRoute)
     } 
