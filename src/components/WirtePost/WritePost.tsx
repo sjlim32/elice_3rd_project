@@ -24,6 +24,9 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { Editor, IAllProps as EditorProps } from '@tinymce/tinymce-react';
 import { Editor as TinyMCEEditor } from 'tinymce';
+import * as API from '@/utils/api';
+import { getUserInfo } from '@/utils/util';
+import { categoryType } from '@/types/category';
 import * as API from '@/utils/api'
 import { getUserInfo } from '@/utils/util';
 import { categoryType } from '@/types/category';
@@ -44,6 +47,7 @@ interface Props {
 }
 
 interface Option {
+  id: number;
   id: number;
   value: string;
 }

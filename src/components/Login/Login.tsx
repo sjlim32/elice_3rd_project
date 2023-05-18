@@ -55,6 +55,7 @@ const Login = () => {
         // 로그인 실패 처리 및 오류 메시지 표시
         await signOut(auth); // Firebase에서 로그아웃
         console.error('로그인 실패: ' + response.error);
+        alert('로')
       }
     } catch (error) {
       console.log(error);
