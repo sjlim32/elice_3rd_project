@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import axios from 'axios'
+import * as API from '@/utils/api';
+import { getUserInfo } from "@/utils/util"
 import {
 	Container,
 	Form,
@@ -22,14 +23,19 @@ export const ModifyInfo = () => {
 
 	const router = useRouter()
 
-	useEffect(() => {
-		// const res = axios.get(`/api/v1/user/:id`)
+	const FirstRender = async () => {
+		const getUser : any = await getUserInfo()		
+		const res: any = await API.get(`/user/${getUser.email}`)
 
-		// setEmail(res.data.email)
-		// setPassword(res.data.password)
-		// setNickname(res.data.nickName)
-		// setBlogTitle(res.data.blogTitle)
-		// setBio(res.data.bio)
+		setEmail(res.data.email)
+		setPassword(res.data.password)
+		setNickname(res.data.nickName)
+		setBlogTitle(res.data.blogTitle)
+		setBio(res.data.bio)
+	}
+	
+	useEffect(() => {
+	FirstRender()
 	}, [])
 
 	// ! password, passwordConfirm 일치 확인 구현
@@ -57,8 +63,6 @@ export const ModifyInfo = () => {
 	const handleCancel = () => {
 			router.push('/my-user')
 	};
-
-
 
 	return (
 			<Container>
