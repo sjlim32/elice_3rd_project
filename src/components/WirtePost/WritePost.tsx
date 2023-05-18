@@ -24,7 +24,7 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { Editor, IAllProps as EditorProps } from '@tinymce/tinymce-react';
 import { Editor as TinyMCEEditor } from 'tinymce';
-import * as API from '@/utils/api'
+import * as API from '@/utils/api';
 import { getUserInfo } from '@/utils/util';
 import { categoryType } from '@/types/category';
 
@@ -50,7 +50,7 @@ interface Option {
 
 const WritePost = ({ isEdit }: Props) => {
   const [editContent, setEditContent] = useState<string>('');
-  const [categories, setCategories] = useState<categoryType[]>([])
+  const [categories, setCategories] = useState<categoryType[]>([]);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const titleRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<TinyMCEEditor | null>(null);
@@ -61,7 +61,7 @@ const WritePost = ({ isEdit }: Props) => {
     const selectedValue = event.target.value;
     const selected = categories.find(option => option.name === selectedValue);
     setSelectedOption({ id: selected?.id, value: selected?.name });
-    console.log('selectedOption', selectedOption)
+    console.log('selectedOption', selectedOption);
   };
 
   useEffect(() => {
@@ -75,21 +75,18 @@ const WritePost = ({ isEdit }: Props) => {
     }
   }, [router, isEdit]);
 
+  const getCategories = async () => {
+    const response = await API.get<categoryType>('/categories');
+    console.log('category res : ', response);
+    setCategories(response.data.data);
+  };
 
+  useEffect(() => {
+    getCategories();
+    console.log('cate', categories);
+  }, []);
 
-const getCategories = async () => {
-  const response = await API.get<categoryType>('/categories');
-  console.log('category res : ', response)
-  setCategories(response.data.data)
-}
-
-
- useEffect(()=>{
-  getCategories()
-  console.log('cate',categories)
- },[])
-
-  const handleSubmit = async() => {
+  const handleSubmit = async () => {
     const title = titleRef.current?.value;
     const content = contentRef.current?.getContent();
     const summary = summaryRef.current?.value;
@@ -113,14 +110,14 @@ const getCategories = async () => {
     console.log('summary : ', summary);
     console.log('option : ', selectedOption);
 
-    const result = API.post('/posts', {title, content})
-    console.log('result : ', result)
+    const result = API.post('/posts', { title, content });
+    console.log('result : ', result);
   };
 
   const handleDelete = () => {
     console.log('삭제');
-    const data = getUserInfo()
-    console.log('data', data)
+    const data = getUserInfo();
+    console.log('data', data);
   };
 
   const handleSummary = () => {
@@ -139,11 +136,12 @@ const getCategories = async () => {
               <option value="" className="defaultSelect">
                 카테고리 선택
               </option>
-              {categories && categories?.map(option => (
-                <option key={option.id} value={option.name}>
-                  {option.name}
-                </option>
-              ))}
+              {categories &&
+                categories?.map(option => (
+                  <option key={option.id} value={option.name}>
+                    {option.name}
+                  </option>
+                ))}
             </select>
           </CategorySelectWrapper>
           <SubmitButtonContainer>
@@ -202,8 +200,8 @@ const getCategories = async () => {
                 toolbar:
                   'undo redo | blocks | formatselect | bold italic | emoticons codesample image | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent ',
                 image_title: false,
-                content_css: false, 
-                skin: false
+                content_css: false,
+                skin: false,
               }}
             />
           </div>
