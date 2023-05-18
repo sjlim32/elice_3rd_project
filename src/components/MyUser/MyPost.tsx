@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, ChangeEvent, MouseEvent } from 'react'
 // import { useRecoilState, useRecoilValue } from 'recoil';
 // import { useRouter } from 'next/router';
 import * as API from '@/utils/api';
-import Pagination from 'react-js-pagination';
 import {
 	Container,
 	TopDiv,
@@ -48,26 +47,16 @@ const MyPost = () => {
 	const [postsList, setPostsList] = useState(postsMockList)
 	const [category, setCategory] = useState<string>('All')
 	const search: any = useRef('')
-	const inputRef: any = useRef()
-
-	const [ currPage, setCurrPage ] = useState<number>(1)
-  const [ totalPage, setTotalPage ] = useState(null)
-  const [ render, setRender ] = useState<boolean>(false);
-  const perPage = 10;
-
-  const params = { page:currPage, perPage: perPage}
-
 
 	// * 최초 게시글 목록 렌더
 	const FirstRender = async () => {
-		// const res = await axios.get('/api/v1/posts')
-		// setPostsList(res.data)
+		const res: any = await API.get('/posts')
+		setPostsList(res.data.data)
 	}
 
 	useEffect(() => {
-		// return FirstRender()
-		inputRef.current.focus()
-	}, [postsList])
+	FirstRender()
+	}, [])
 
 	// * 검색
 	const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
@@ -76,11 +65,11 @@ const MyPost = () => {
 
 	const handleSearch = async() => {
 		try {
-			// const res = await axios.get('/api/v1/posts')
-			// const searchingPosts = res.data.filter((post) =>
-      //       post.title.includes(search)
-      //     );
-      //     setPosts(filterdPosts);
+			const res: any = await API.get('/posts')
+			const searchingPosts = await res.data.data.filter(post=>
+            post.title.includes(search.current)
+          );
+          setPostsList(searchingPosts);
 		} catch (error) {
 			console.error("에러", error)
 		}
@@ -94,8 +83,8 @@ const MyPost = () => {
 
 	const getCategoryPosts = async() => {
 		try {
-		// const res = await axios.get(`/api/v1//posts/category/{category}`)
-		// setPostList(res.data)
+		const res: any = await API.get(`/api/v1//posts/category/:${category}`)
+		setPostsList(res.data)
 			console.log(category)
 		} catch (error) {
 			console.error("에러", error)
@@ -108,37 +97,12 @@ const MyPost = () => {
 		: getCategoryPosts()
 	}, [category])
 
-	// * pagination
-  const handlePageChange = async (page: number) => {
-		try {
-			if (currPage === page)
-				return;
-			setCurrPage(page);
-			setRender(true);
-		} catch (error) {
-			console.error("에러", error)
-		}
-  }
-
-  const rending = async () => {
-    // const res = await API.get("/posts", params);
-    // setPosts(() => res.data.partialPosts);
-  }
-
-  // useEffect(() => {
-  //   if (render) {
-  //     rending();
-  //     setRender(false);
-  //   }
-  // }, [render, currPage])
-
-
 	return (
 		<Container>
 			<TopDiv>
 				<Btn value={'뒤로가기'} onRoute={`/my-user`} alert={null} />
 				<SearchDiv>
-					<SearchInput ref={inputRef} placeholder={'검색어를 입력해주세요.'} onChange={handleInput}></SearchInput>
+					<SearchInput placeholder={'검색어를 입력해주세요.'} onChange={handleInput}></SearchInput>
 					<SearchBtn onClick={() => handleSearch()}>검색</SearchBtn>
 				</SearchDiv>
 			</TopDiv>
@@ -178,15 +142,6 @@ const MyPost = () => {
 					)}
 					</MainDiv>
 				</MainWrap>	
-					<Pagination
-						activePage={currPage}
-						itemsCountPerPage={perPage}
-						totalItemsCount={totalPage * perPage}
-						pageRangeDisplayed={totalPage}
-						prevPageText={"<"}
-						nextPageText={">"}
-						onChange={handlePageChange}
-					/>
 		</Container >
 	);
 };

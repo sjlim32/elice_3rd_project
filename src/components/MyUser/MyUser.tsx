@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
 // import { useRouter } from 'next/router'
-import * as API from '@/utils/api';
 import { Container, NameDiv} from './MyUser-styled'
-// import { testState } from '@/store/test'
 import Btn from '../common/my_page/button'
+import { getUserInfo } from "@/utils/util"
 
 const MyUser = () => {
-  // const [test, setTest] = useRecoilState(testState)
   const [user, setUser] = useState<string>('XYZ')
 
-  useEffect(() => {
-    // const res = axios.get
-    // setUser(res.data)
+  const FirstRender = async () => {
+    const getUser: any = await getUserInfo()
+    setUser(getUser.nickname)
+  }
 
+  useEffect(() => {
+    FirstRender()
   }, [])
 
   return (
