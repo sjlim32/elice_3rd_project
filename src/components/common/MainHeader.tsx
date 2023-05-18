@@ -1,20 +1,7 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 import { MainWrapper, SubHeader, MainNav, MainNavImage, MainNavLink } from './mainHeader-styled'
-// import { DropdownWrapper, DropdownHeader, DropdownListContainer
-// , DropdownListItem } from './dropdown-styled';
-
-// interface DropdownProps{
-//     options: string[];
-// }
 
 const MainHeader = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-    const [activeLink, setActiveLink] = useState('');
-
-    const handleLogout = () => {
-        setIsLoggedIn(false);
-        setActiveLink('');
-    } 
 
     return (
             <MainWrapper>
@@ -26,7 +13,9 @@ const MainHeader = () => {
                     width="25"
                     height="25"
                     />
-                    <MainNavLink href="/" className='trend'>
+                    <MainNavLink
+                    href="/"
+                    className='trend'>
                         <MainNav>Trending</MainNav>
                     </MainNavLink>
                     <MainNavImage
@@ -36,7 +25,9 @@ const MainHeader = () => {
                     width="23"
                     height="23"
                     />
-                    <MainNavLink href="/recent-posts">
+                    <MainNavLink
+                    href="/recent-posts"
+                    className='recent'>
                         <MainNav>Recent Posts</MainNav>
                     </MainNavLink>
                 </SubHeader>

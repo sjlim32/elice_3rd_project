@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export const HeaderWrapper = styled.header`
-  max-width: 1140px;
+  max-width: 1800px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;

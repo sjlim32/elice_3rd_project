@@ -22,16 +22,15 @@ export const SubHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: left;
-  background-color: yellow;
   font-size: 20px;
 `;
 
-export const MainNav = styled.h2`
+export const MainNav = styled.div`
   position: relative;
   padding-left: 30px;
   cursor: pointer;
   font-family: 'Roboto Flex', sans-serif;
-  font-weight: bold;
+  font-weight: bold;  
 `;
 
 export const MainNavImage = styled(Image)`
@@ -49,13 +48,8 @@ export const MainNavImage = styled(Image)`
 `;
 
 export const MainNavLink = styled(Link)`
-  &.trend {
-    cursor: pointer;
-  }
-
-  &.recent {
-    cursor: pointer;
-  }  
+  cursor: pointer;
+  height: 30px;
 `;
 
 
