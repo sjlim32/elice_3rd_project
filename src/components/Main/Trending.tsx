@@ -24,7 +24,6 @@ const Trending = () => {
   }, []);
 
   const loadPosts = async (page: number) => {
-    // 페이지 번호와 페이지 당 아이템 수를 API에 전달
     const { data }: any = await API.get(`/posts/trending?pageNo=${page}`);
     const response = data.data.rows;
     console.log(response);
@@ -63,7 +62,7 @@ const Trending = () => {
                             </TrendingPost>
                     </TrendingPostsWrapper>
                     ))}
-                </InfiniteScroll>
+        </InfiniteScroll>
       </>      
   );
 };

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import {
   Form,
   LoginTitle,
@@ -18,6 +19,7 @@ type LoginType = {
 };
 
 const Login = () => {
+  const router = useRouter();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -50,6 +52,7 @@ const Login = () => {
         // 백엔드 검증 성공
         // 로그인 처리 및 다음 페이지로 이동
         console.log('response:', response);
+        router.push('/');
       } else {
         // 백엔드 검증 실패
         // 로그인 실패 처리 및 오류 메시지 표시
