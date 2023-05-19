@@ -18,7 +18,7 @@ export const MainWrapper = styled.main`
 
 export const SubHeader = styled.div`
   width: 1000px;
-  height: 100px;
+  height: 40px;
   display: flex;
   flex-direction: row;
   justify-content: left;
