@@ -12,14 +12,14 @@ type BtnProps = {
 export default memo(function Btn(props: BtnProps) {
   const router = useRouter();
 
-  const handleClick = async () => {
+  const handleClick = async () => {    
     if (props.value === '회원탈퇴') {
-      const res = await API.delete(`/user`)
-      alert(props.alert)
+      const res: any = await API.delete(`/user`)
+      alert(res)
       router.push(props.onRoute)
     } 
     else router.push(props.onRoute)
-  };
+  }
 
   return <>
     <Button
