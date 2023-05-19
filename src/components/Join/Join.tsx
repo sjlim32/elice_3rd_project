@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import * as API from '@/utils/api';
 import {
   Container,
   Form,

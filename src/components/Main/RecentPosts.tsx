@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { RecentPostsWrapper, RecentPost, PostThumbnail } from './recentPosts-styled';
+import { RecentPostsWrapper, RecentPost, RecentPostItem } from './recentPosts-styled';
 import * as API from '@/utils/api';
+import {convertCreatedAt} from '@/utils/util';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 interface Data{
@@ -8,10 +9,9 @@ interface Data{
     content: string;
     summary: string;
     views: number;
-    user: string;
-    created_at: string;
-    updated_at: string;
-    deleted_at?: string;
+    User: {nickname: string};
+    createdAt: string;
+    Likers: {nickname:string}[]
 }
 
 const RecentPosts = () => {
@@ -23,18 +23,6 @@ const RecentPosts = () => {
         loadPosts(1);
     }, []);
 
-    // const loadPosts = async () => {
-    //     try{
-    //         const response = await API.get<Data[]>('/posts/recent?pageNo=1');
-    //         const data = response.data.data.rows;
-    //         setPosts(prevPosts => [...prevPosts, ...data]);
-    //         setHasMore(data.length > 0);
-    //     }
-    //     catch(error){
-    //         alert(error);
-    //         console.error(error);
-    //     }
-    // };
 
     const loadPosts = async (page: number) => {
         // 페이지 번호와 페이지 당 아이템 수를 API에 전달
@@ -68,13 +56,12 @@ const RecentPosts = () => {
                     {posts.map((item, index) => (
                     <RecentPostsWrapper >                           
                             <RecentPost key={index}>
-                                <PostThumbnail/><br/>
-                                {item.title}<br/>
-                                {item.content}<br/>
-                                {item.summary}<br/>
-                                {item.views}<br/>
-                                {item.user}<br/>
-                                {item.created_at}
+                                <RecentPostItem><h3>{item.title}</h3></RecentPostItem>
+                                <RecentPostItem className='summary'>{item.summary}</RecentPostItem>                                                              
+                                <RecentPostItem className='view'>조회수: {item.views}회</RecentPostItem>
+                                <RecentPostItem className='liker'>좋아요: {item.Likers.length}</RecentPostItem>
+                                <RecentPostItem className='date'>{convertCreatedAt(item.createdAt)}</RecentPostItem>                                
+                                <RecentPostItem className='user'>by <div>{item.User.nickname}</div></RecentPostItem>
                             </RecentPost>
                     </RecentPostsWrapper>
                     ))}

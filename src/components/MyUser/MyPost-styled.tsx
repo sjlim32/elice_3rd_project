@@ -74,6 +74,7 @@ export const SideDiv = styled.div`
 	width: 15%;
 	margin-left: 3%;
 	
+	
 	border: 1px solid lightgray;
 
 	& > div {

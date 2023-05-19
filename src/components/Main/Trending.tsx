@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { TrendingPostsWrapper, TrendingPost, PostThumbnail } from './trending-styled';
+import { TrendingPostsWrapper, TrendingPost, TrendingPostItem } from './trending-styled';
 import * as API from '@/utils/api';
+import {convertCreatedAt} from '@/utils/util';
 import InfiniteScroll from 'react-infinite-scroll-component';
 
 interface Data{
@@ -8,10 +9,9 @@ interface Data{
   content: string;
   summary: string;
   views: number;
-  user: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at?: string;
+  User: {nickname: string};
+  createdAt: string;
+  Likers: {nickname:string}[]
 }
 
 const Trending = () => {
@@ -54,13 +54,12 @@ const Trending = () => {
                     {posts.map((item, index) => (
                     <TrendingPostsWrapper >                           
                             <TrendingPost key={index}>
-                                <PostThumbnail/><br/>
-                                {item.title}<br/>
-                                {item.content}<br/>
-                                {item.summary}<br/>
-                                {item.views}<br/>
-                                {item.user}<br/>
-                                {item.created_at}
+                                <TrendingPostItem><h3>{item.title}</h3></TrendingPostItem>
+                                <TrendingPostItem className='summary'>{item.summary}</TrendingPostItem>                                                              
+                                <TrendingPostItem className='view'>조회수: {item.views}회</TrendingPostItem>
+                                <TrendingPostItem className='liker'>좋아요: {item.Likers.length}</TrendingPostItem>
+                                <TrendingPostItem className='date'>{convertCreatedAt(item.createdAt)}</TrendingPostItem>                                
+                                <TrendingPostItem className='user'>by <div>{item.User.nickname}</div></TrendingPostItem>
                             </TrendingPost>
                     </TrendingPostsWrapper>
                     ))}

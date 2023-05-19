@@ -63,8 +63,10 @@ const OtherPost = () => {
 			const res: any = await API.get('/user',{ 
 				params: { nickname: {nickName} } 
 				} )
-			setPostsList(res.data.data)
+			setPostsList(res.data.data.Posts)
+			setCategory(res.data.data.Categories)
 		} catch (error) {
+			console.error("에러 발생", error)
 		}
 	}
 
@@ -81,7 +83,7 @@ const OtherPost = () => {
 		try {
 			const res: any = await API.get('/posts')
 			const searchingPosts = await res.data.data.filter(post=>
-            post.title.includes(search.current)
+            post.category.includes(search.current)
           );
           setPostsList(searchingPosts);
 		} catch (error) {
@@ -91,25 +93,25 @@ const OtherPost = () => {
 
 	// * 카테고리 설정
 
-	const handleCategory = (e: MouseEvent<HTMLButtonElement>) => {
-		setCategory(e.currentTarget.value)
+	const handleCategory = async(e: MouseEvent<HTMLButtonElement>) => {
+		// setCategory(e.currentTarget.value)
+		try {
+			const res: any = await API.get('/user')
+          setPostsList(res.data.data);			
+		} catch (error) {
+			
+		}
 	}
 
-	const getCategoryPosts = async() => {
+	const getCategoryPosts = async(id) => {
 		try {
-		// const res = await axios.get(`/posts/category/{category}`)
-		// setPostList(res.data)
-			console.log(category)
+		const res: any = await API.get(`/posts/category/${id}`)
+		setPostsList(res.data.data)
+			console.log(res.data.data)
 		} catch (error) {
 			console.error("에러", error)
 		}
 	}
-
-	useEffect(() => {
-		category === 'All'
-		? FirstRender()
-		: getCategoryPosts()
-	}, [category])
 
 	return (
 		<Container>
@@ -126,10 +128,10 @@ const OtherPost = () => {
 						<button value={"All"} onClick={(e) => handleCategory(e)}>All</button>
 					}
 					{
-						postsList.map((post, idx) => {
+						category && category.map((post, idx) => {
 							return (
-								<button value={post.category} onClick={(e) => handleCategory(e)}>
-									{post.category}
+								<button value={post.name} onClick={e => getCategoryPosts(post.id)}>
+									{post.name}
 								</button>
 							)
 						})
@@ -137,17 +139,16 @@ const OtherPost = () => {
 				</SideDiv>
 				<MainDiv>
 				{
-					postsList.map((post, idx) => {
+					postsList && postsList.map((post, idx) => {
 						return (
 							<ContentDiv key={post.id}>
 								<HeaderWrap>
-									<PostThumbnail alt={'썸네일'}></PostThumbnail>
 									<PostRouter link={post.id} title={post.title} />
 									<div>{post.summary}</div>
 								</HeaderWrap>
 								<FooterWrap>
 									<div>작성일 : {post.createdAt.split('T')[0]}</div>
-									<div>카테고리 : {post.category}</div>
+									<div>좋아요 : {post.liker.length}</div>
 									<div>조회수 : {post.views}</div>
 								</FooterWrap>
 							</ContentDiv>

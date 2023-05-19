@@ -14,49 +14,46 @@ import {
 	Bio
 } from './ModifyInfo-styled';
 
+interface userData {
+  email: string | any;
+  nickname: string | any;
+  blogName: string;
+  bio: string;
+}
+
 export const ModifyInfo = () => {
-	const [ email, setEmail ] = useState<string>('elice@rabbit.com')
-	const [ password, setPassword ] = useState<string>('123123')
-	const [ nickname, setNickname] = useState<string>('토끼토끼')
-	const [ blogTitle, setBlogTitle ] = useState<string>('토끼굴')
-	const [ bio, setBio ] = useState<string>('설명입니다.')
+  const [userData, setUserData] = useState<userData>({
+    email: '',
+    nickname: '',
+    blogName: '',
+    bio: '',
+  });
 
 	const router = useRouter()
 
-	const FirstRender = async () => {
-		const getUser : any = await getUserInfo()		
-		const res: any = await API.get(`/user/${getUser.email}`)
-
-		setEmail(res.data.email)
-		setPassword(res.data.password)
-		setNickname(res.data.nickName)
-		setBlogTitle(res.data.blogTitle)
-		setBio(res.data.bio)
-	}
-	
 	useEffect(() => {
-	FirstRender()
-	}, [])
+		const firstRender = async () => {
+			const getUser = await getUserInfo()
+			setUserData({ email: getUser.email, nickname: getUser.nickname })
+	}
+	firstRender()
+	}, [userData])
 
-	// ! password, passwordConfirm 일치 확인 구현
+  const handleChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setUserData({ ...userData, [event.target.name]: event.target.value });
+  };
 
 	const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
 			event.preventDefault();
 			// 회원가입 로직 구현
 			try {
-				// const res = await axios.patch(`/api/v1/user/:id`, {
-					// email: email,
-        //   password: password,
-        //   nickname: nickname,
-        //   address: {
-        //     zonecode,
-        //     address,
-        //     detailAddress,
-        //   },
-        // });
-				console.log("Signup!");
+				console.log(userData)
+				const res = await API.patch(`/user`, userData);
+				console.log("수정 완료", res);
 			} catch (error) {
-				
+				console.error("에러 발생", error)
 			}
 	};
 	
@@ -70,17 +67,36 @@ export const ModifyInfo = () => {
 							<SignupTitle>회원 정보 수정</SignupTitle>
 							<InputWrapper>
 									<InputTitle>이메일</InputTitle>
-									<Input type="email" placeholder={email} required />
-									<InputTitle>비밀번호</InputTitle>
-									<Input type="password" placeholder="●●●●●●●" required />
-									<InputTitle>비밀번호 확인</InputTitle>
-									<Input type="password" placeholder="●●●●●●●" required />
+										<Input 
+											name="email" 
+											type="email"
+											onChange={handleChange} 
+											value={userData.email}
+											placeholder={userData.email}
+											required />
 									<InputTitle>닉네임</InputTitle>
-									<Input type="text" placeholder={nickname} required />
+										<Input 
+										name="nickname" 
+										type="text" 
+										onChange={handleChange}
+										value={userData.nickname}	 
+										placeholder={userData.nickname} 
+										required />
 									<InputTitle>블로그 명</InputTitle>
-									<Input type="text" placeholder={blogTitle} required />
+										<Input 
+										name="blogName" 
+										type="text" 
+										onChange={handleChange}
+										value={userData.blogName}										
+										placeholder={'수정할 블로그명'}
+										required />
 									<InputTitle>블로그 소개</InputTitle>
-									<Bio name="text" placeholder={bio} required />
+										<Bio 
+										name="bio" 
+										onChange={handleChange}
+										value={userData.bio}												
+										placeholder={'블로그 설명을 입력해주세요.'} 
+										required />
 							</InputWrapper>
 							<ButtonWrapper>
 								<Button className='cancel' onClick={handleCancel}>수정 취소</Button>
