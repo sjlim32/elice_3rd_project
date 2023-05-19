@@ -5,38 +5,47 @@ import { PostListContainer, } from './posts-styled';
 import { Grid,Box } from '@mui/material';
 import { PostType } from '@/types/getTypes';
 import PostItem from './PostItem';
+import { useRouter } from 'next/router';
 
 const RecentPosts = () => {
     const [posts, setPosts] = useState<PostType[]>([]);
     const [hasMore, setHasMore] = useState<boolean>(true);
-    const [page, setPage] = useState(0); // 페이지 번호를 저장하는 상태
-
+    const [page, setPage] = useState(1); // 페이지 번호를 저장하는 상태
+    const router = useRouter()
+    
     useEffect(() => {
-        loadPosts(1);
+      loadPosts(page);
     }, []);
-
-
+  
+    const loadMorePosts = () => {
+      const nextPage = page + 1;
+      loadPosts(nextPage);
+      setPage(nextPage);
+    };
+  
     const loadPosts = async (page: number) => {
-        // 페이지 번호와 페이지 당 아이템 수를 API에 전달
-        const { data }: any = await API.get(`/posts/recent?pageNo=${page}`);
-        const response = data.data.rows;
-        console.log(response);
-
-        if(response.length === 0){
-            setHasMore(false);
-            return;
-        }
-
-        setPosts(prevItems => [...prevItems, ...response]);
-        setPage(prevPage => prevPage + 1); // 다음 페이지로 이동
+      const { data }: any = await API.get(`/posts/recent?pageNo=${page}`);
+      const response = data.data.rows;
+      console.log(response);
+  
+      if(response.length === 0){
+          setHasMore(false);
+          return;
+      }
+  
+      setPosts(prevItems => [...prevItems, ...response]);
     }
-
+  
+    const goToDetail = (id) => {
+      router.push(`/posts/${id}`)
+    }
+  
 
     return (
         <PostListContainer>
         <InfiniteScroll
                 dataLength={posts.length}
-                next={() => loadPosts(page + 1)}
+                next={loadMorePosts}
                 hasMore={hasMore}
                 loader={<h3>로딩중...</h3>}
                 endMessage={
@@ -45,11 +54,11 @@ const RecentPosts = () => {
                     </p>
                 }
                 >
-        <Box sx={{ flexGrow: 1 }}>
+            <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={5}>
                       {posts.map((item, index) => (
-                        <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-                        <PostItem {...item} />
+                        <Grid item xs={12} sm={6} md={4} lg={3} key={index} onClick={()=>goToDetail(item.id)}>
+                            <PostItem {...item} />
                         </Grid>                 
                       ))}
               </Grid>

@@ -253,7 +253,7 @@ const WritePost = ({ isEdit }: Props) => {
         placeholder="제목을 입력하세요"
         type="text"
         ref={titleRef}
-        maxLength={30}
+        maxLength={50}
       />
       <SummaryContainer>
         <SummaryButtonWrapper>

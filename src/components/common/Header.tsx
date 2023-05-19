@@ -39,15 +39,21 @@ const Header = () => {
   //   console.log('검색어', searchInput);
   //   setIsSearchVisible(false);
   // };
+  // const checkAdmin = async () => {
+  //   const res: any = await API.get<any>('/user');
+  //   setIsAdmin(res.data.data.admin);
+  // };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, user => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const checkAdmin = async () => {
-          const res: any = await API.get<any>('/user');
-          setIsAdmin(res.data.data.admin);
-        };
-        checkAdmin();
+        const idToken = await user.getIdToken()
+        const res = await API.get<any>('/user', {
+          headers: {
+            Authorization: `Bearer ${idToken}`,
+          },
+        });
+        setIsAdmin(res.data.data.admin);
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
@@ -58,6 +64,7 @@ const Header = () => {
       unsubscribe();
     };
   }, []);
+
 
   const handleLogout = () => {
     signOut(auth);

@@ -21,8 +21,9 @@ const MyUser = () => {
       <NameDiv>
         안녕하세요. <div id='name'>{`${user}`} </div> 님!
       </NameDiv>
-
+      
       <Btn value={'내 게시글 보기'} onRoute={`/my-post`} alert={null} />
+      <Btn value={'카테고리 설정'} onRoute={`/category`} alert={null} />
       <Btn value={'회원정보 수정'} onRoute={`/modify-info`} alert={null} />
       <Btn value={'회원 탈퇴'} onRoute={`/`} alert={'정상적으로 탈퇴되었습니다.'} />
     </Container >

@@ -11,12 +11,18 @@ import { useRouter } from 'next/router';
 const Trending = () => {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [page, setPage] = useState(0); // 페이지 번호를 저장하는 상태
+  const [page, setPage] = useState(1); // 페이지 번호를 저장하는 상태
   const router = useRouter()
   
   useEffect(() => {
-    loadPosts(1);
+    loadPosts(page);
   }, []);
+
+  const loadMorePosts = () => {
+    const nextPage = page + 1;
+    loadPosts(nextPage);
+    setPage(nextPage);
+  };
 
   const loadPosts = async (page: number) => {
     const { data }: any = await API.get(`/posts/trending?pageNo=${page}`);
@@ -29,7 +35,6 @@ const Trending = () => {
     }
 
     setPosts(prevItems => [...prevItems, ...response]);
-    setPage(prevPage => prevPage + 1); // 다음 페이지로 이동
   }
 
   const goToDetail = (id) => {
@@ -40,7 +45,7 @@ const Trending = () => {
       <PostListContainer>
         <InfiniteScroll
                 dataLength={posts.length}
-                next={() => loadPosts(page + 1)}
+                next={loadMorePosts}
                 hasMore={hasMore}
                 loader={<h3>로딩중...</h3>}
                 endMessage={
