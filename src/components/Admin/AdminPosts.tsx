@@ -35,7 +35,7 @@ const Admin = (props: any) => {
     return (
       <TableRow key={item.id}>
         <TableCell width="25%">{item.title}</TableCell>
-        <TableCell width="30%">{item.content}</TableCell>
+        <TableCell width="40%">{item.content}</TableCell>
         <TableCell width="20%">
           {item.createdAt.slice(0, 10)} {item.createdAt.slice(11, 19)}
         </TableCell>
@@ -66,7 +66,7 @@ const Admin = (props: any) => {
         <UserTable>
           <TableHead>
             <TableCell width="25%">게시물 제목</TableCell>
-            <TableCell width="30%">게시물 내용</TableCell>
+            <TableCell width="40%">게시물 내용</TableCell>
             <TableCell width="20%">작성일자</TableCell>
             <TableCell width="15%">게시물 삭제</TableCell>
           </TableHead>

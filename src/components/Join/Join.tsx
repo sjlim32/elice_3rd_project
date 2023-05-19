@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import * as API from '@/utils/api';
+import { useRouter } from 'next/router';
 import {
   Container,
   Form,
@@ -21,6 +21,7 @@ interface SignupData {
 }
 
 const Join = () => {
+  const router = useRouter();
   const [signupData, setSignupData] = useState<SignupData>({
     email: '',
     password: '',
@@ -44,6 +45,7 @@ const Join = () => {
         timeout: 10000, // 10초 시간 제한 설정
       });
       console.log(response);
+      router.push('/login');
     } catch (error) {
       console.error(error);
       alert('회원가입이 완료되지 않았습니다!');
