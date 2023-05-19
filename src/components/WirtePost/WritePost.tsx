@@ -192,6 +192,8 @@ const WritePost = ({ isEdit }: Props) => {
       });
       console.log('post response : ', response);
     }
+
+    router.push('/')
   };
 
   const handleDelete = async () => {
