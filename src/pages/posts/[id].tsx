@@ -5,6 +5,7 @@ import * as api from '@/utils/api';
 import React, { useEffect, useState } from 'react';
 import auth from '@/components/common/auth';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 const Title = styled.div`
   width: 40%;
@@ -69,6 +70,9 @@ interface PostDetail {
     createdAt: Date;
     id: number;
   }[];
+  Likers: {
+    nickname: string
+  }[];
   User: { nickname: string };
   UserId: string;
   content: string;
@@ -93,20 +97,35 @@ export default function Posts() {
   const router = useRouter();
   const [Id, setId] = useState<string>('');
   const [Postdata, setPostdata] = useState<PostDetail>({});
+  const [Isliked, setIsliked] = useState<Boolean>(false);
 
   useEffect(() => {
     if (router.isReady) {
       const id = String(router.query.id);
       setId(id);
       getPost(id);
-      console.log(user);
     }
   }, [router]);
 
   const getPost = async (id: string) => {
     const response = await api.get(`/posts/${id}`);
-    console.log(response.data?.data);
-    setPostdata(response.data?.data);
+    const data = response.data?.data
+    console.log(data);
+    
+    for(let like of data.Likers) {
+      if (like.nickname == user?.displayName) {
+        setIsliked(true)
+      }
+    }
+    setPostdata(data);
+  };
+
+  const deletePost = async () => {
+    try {
+      await api.delete(`/posts/${Id}`);
+    } catch (error: any) {
+      alert(error);
+    }
   };
 
   const onCommentSubmitHandler: SubmitHandler<
@@ -114,7 +133,6 @@ export default function Posts() {
   > = async data => {
     try {
       await api.post(`/comments/${Id}`, data);
-      // window.location.replace("/msg")
     } catch (error: any) {
       alert(error);
     }
@@ -123,7 +141,23 @@ export default function Posts() {
   const deleteComment = async (commentId: number) => {
     try {
       await api.delete(`/comments/${commentId}`);
-      // window.location.replace("/msg")
+    } catch (error: any) {
+      alert(error);
+    }
+  };
+
+  const addLike = async () => {
+    try {
+      const data = "like"
+      await api.patch(`posts/${Id}/like`, data);
+    } catch (error: any) {
+      alert(error);
+    }
+  };
+
+  const deleteLike = async () => {
+    try {
+      await api.delete(`posts/${Id}/like`);
     } catch (error: any) {
       alert(error);
     }
@@ -132,7 +166,7 @@ export default function Posts() {
   // const updateComment = async (commentId, data)=>{
   //   try {
   //       await api.patch(`/comments/${data.commentId}`, data);
-  //       // window.location.replace("/msg")
+  //   
   //   } catch (error : any) {
   //       alert(error);
   //   }
@@ -142,10 +176,21 @@ export default function Posts() {
     <>
       <Title>{Postdata.title}</Title>
       <Author>
-        {Postdata.User?.nickname} ·{' '}
-        <span style={{ color: 'gray', fontSize: '0.7rem' }}>
-          {new Date(Postdata.createdAt).toString().substring(0, 21)}
+        {Postdata.User?.nickname}
+        <span style={{ color: 'gray', fontSize: '0.7rem' }}>{' · '}
+          {new Date(Postdata.createdAt).toString().substring(0, 21)}{' · '}
+          {Postdata.views} views{' · '}
+          {Isliked ?
+            <span onClick={deleteLike} style={{ color: 'pink'}}>{Postdata.Likers.length} likes</span> :
+            <span onClick={addLike}>{Postdata.Likers.length} likes</span>
+          }
         </span>
+        {user?.displayName == Postdata.User.nickname ? (
+          <>
+            <Link href={`/edit/${Id}`} style={{ color: 'blue', fontSize: '0.7rem' }}> · 수정</Link>
+            <span onClick={deletePost} style={{ color: 'red', fontSize: '0.7rem' }}> · 삭제</span>
+          </>
+        ) : null}
       </Author>
       <Post>{Postdata.content}</Post>
 
@@ -168,19 +213,12 @@ export default function Posts() {
           <div key={comment.id}>
             <CommentAuthor>
               {comment.User.nickname}
-              <div
-                style={{ color: 'gray', padding: '1em 0', fontSize: '0.5rem' }}
-              >
+              <div style={{ color: 'gray', padding: '1em 0', fontSize: '0.5rem' }}>
                 {new Date(comment.createdAt).toString().substring(0, 21)}
                 {user?.displayName == comment.User.nickname ? (
                   <>
-                    <span style={{ color: 'blue' }}> · 수정 · </span>
-                    <span
-                      onClick={() => deleteComment(comment.id)}
-                      style={{ color: 'red' }}
-                    >
-                      삭제
-                    </span>
+                    <span style={{ color: 'blue' }}> · 수정</span>
+                    <span onClick={() => deleteComment(comment.id)} style={{ color: 'red' }}> · 삭제</span>
                   </>
                 ) : null}
               </div>
@@ -193,8 +231,8 @@ export default function Posts() {
               <Comment>{comment.content}</Comment>
             )}
           </div>
-        );
+        )
       })}
     </>
-  );
+  )
 }
