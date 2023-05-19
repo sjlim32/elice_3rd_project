@@ -54,10 +54,12 @@ const MyPost = () => {
 		setPostsList(res.data.data.Posts)
 		setCategory(res.data.data.Categories)
 		console.log(res.data.data.Posts)
+		
 	}
 	
 	useEffect(() => {
-	FirstRender()
+		FirstRender()
+
 	}, [])
 
 	// * 검색
@@ -125,7 +127,7 @@ const MyPost = () => {
 				</SideDiv>
 				<MainDiv>
 				{
-					postsList && postsList.map((post, idx) => {
+					postsList && postsList?.map((post, idx) => {
 						return (
 							<ContentDiv key={post.id}>
 								<HeaderWrap>

@@ -11,12 +11,18 @@ import { useRouter } from 'next/router';
 const Trending = () => {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [page, setPage] = useState(0); // 페이지 번호를 저장하는 상태
+  const [page, setPage] = useState(1); // 페이지 번호를 저장하는 상태
   const router = useRouter()
   
   useEffect(() => {
-    loadPosts(1);
+    loadPosts(page);
   }, []);
+
+  const loadMorePosts = () => {
+    const nextPage = page + 1;
+    loadPosts(nextPage);
+    setPage(nextPage);
+  };
 
   const loadPosts = async (page: number) => {
     const { data }: any = await API.get(`/posts/trending?pageNo=${page}`);
@@ -29,7 +35,6 @@ const Trending = () => {
     }
 
     setPosts(prevItems => [...prevItems, ...response]);
-    setPage(prevPage => prevPage + 1); // 다음 페이지로 이동
   }
 
   const goToDetail = (id) => {
@@ -40,7 +45,7 @@ const Trending = () => {
       <PostListContainer>
         <InfiniteScroll
                 dataLength={posts.length}
-                next={() => loadPosts(page + 1)}
+                next={loadMorePosts}
                 hasMore={hasMore}
                 loader={<h3>로딩중...</h3>}
                 endMessage={
@@ -49,7 +54,7 @@ const Trending = () => {
                     </p>
                 }
                 >
-             <Box sx={{ flexGrow: 1 }}>
+             {/* <Box sx={{ flexGrow: 1 }}> */}
                 <Grid container spacing={5}>
                         {posts.map((item, index) => (
                           <Grid item xs={12} sm={6} md={4} lg={3} key={index} onClick={()=>goToDetail(item.id)}>
@@ -57,7 +62,7 @@ const Trending = () => {
                           </Grid>                 
                         ))}
                 </Grid>
-            </Box>
+            {/* </Box> */}
         </InfiniteScroll>
       </PostListContainer>      
   );

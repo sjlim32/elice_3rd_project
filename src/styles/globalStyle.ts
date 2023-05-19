@@ -17,6 +17,7 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     font-family: 'Noto Sans KR', sans-serif;
     padding: 0;
+    line-height:1.5;
   }
 
   a {
