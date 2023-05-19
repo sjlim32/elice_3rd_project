@@ -130,6 +130,7 @@ export default function Posts() {
   const deletePost = async () => {
     try {
       await api.delete(`/posts/${Id}`);
+      window.location.replace('/')
     } catch (error: any) {
       alert(error);
     }
@@ -140,6 +141,7 @@ export default function Posts() {
   > = async data => {
     try {
       await api.post(`/comments/${Id}`, data);
+      window.location.reload()
     } catch (error: any) {
       alert(error);
     }
@@ -148,6 +150,7 @@ export default function Posts() {
   const deleteComment = async (commentId: number) => {
     try {
       await api.delete(`/comments/${commentId}`);
+      window.location.reload()
     } catch (error: any) {
       alert(error);
     }
@@ -157,6 +160,7 @@ export default function Posts() {
     try {
       const data = "like"
       await api.patch(`posts/${Id}/like`, data);
+      window.location.reload()
     } catch (error: any) {
       alert(error);
     }
@@ -165,6 +169,7 @@ export default function Posts() {
   const deleteLike = async () => {
     try {
       await api.delete(`posts/${Id}/like`);
+      window.location.reload()
     } catch (error: any) {
       alert(error);
     }
@@ -173,6 +178,7 @@ export default function Posts() {
   const updateComment = async (commentId: string, data: string)=>{
     try {
         await api.patch(`/comments/${commentId}`, data);
+        window.location.reload()
     } catch (error : any) {
         alert(error);
     }
@@ -191,14 +197,14 @@ export default function Posts() {
           {new Date(Postdata.createdAt).toString().substring(0, 21)}{' · '}
           {Postdata.views} views{' · '}
           {Isliked ?
-            <span onClick={deleteLike} style={{ color: 'pink'}}>{Postdata.Likers.length} ♥</span> :
+            <span onClick={deleteLike} style={{ color: 'pink', cursor: 'pointer'}}>{Postdata.Likers.length} ♥</span> :
             <span onClick={addLike}>{Postdata.Likers.length} ♡</span>
           }
         </span>
         {user?.displayName == Postdata.User.nickname ? (
           <>
-            <Link href={`/edit/${Id}`} style={{ color: 'blue', fontSize: '0.7rem' }}> · 수정</Link>
-            <span onClick={deletePost} style={{ color: 'red', fontSize: '0.7rem' }}> · 삭제</span>
+            <Link href={`/edit/${Id}`} style={{ color: 'blue', fontSize: '0.7rem', cursor: 'pointer' }}> · 수정</Link>
+            <span onClick={deletePost} style={{ color: 'red', fontSize: '0.7rem', cursor: 'pointer' }}> · 삭제</span>
           </>
         ) : null}
       </Author>
@@ -227,8 +233,8 @@ export default function Posts() {
                 {new Date(comment.createdAt).toString().substring(0, 21)}
                 {user?.displayName == comment.User.nickname ? (
                   <>
-                    <span onClick={() => setIsEditingCommentId(comment.id)} style={{ color: 'blue' }}> · 수정</span>
-                    <span onClick={() => deleteComment(comment.id)} style={{ color: 'red' }}> · 삭제</span>
+                    <span onClick={() => setIsEditingCommentId(comment.id)} style={{ color: 'blue', cursor: 'pointer' }}> · 수정</span>
+                    <span onClick={() => deleteComment(comment.id)} style={{ color: 'red', cursor: 'pointer' }}> · 삭제</span>
                   </>
                 ) : null}
               </div>
