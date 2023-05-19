@@ -19,6 +19,7 @@ import {
 // import './pagination.scss'
 import Btn from '../common/my_page/button'
 import PostRouter from '../common/my_page/post_router'
+import { CategoryType, PostType } from '@/types/getTypes';
 
 //----- MockData
 const postsMockList: any[] = [{
@@ -44,8 +45,8 @@ const postsMockList: any[] = [{
 }]
 
 const MyPost = () => {
-	const [postsList, setPostsList] = useState(postsMockList)
-	const [category, setCategory] = useState<any>()
+	const [postsList, setPostsList] = useState<PostType[]>()
+	const [category, setCategory] = useState<CategoryType[]>()
 	const search: any = useRef('')
 
 	// * 최초 게시글 목록 렌더
@@ -53,11 +54,11 @@ const MyPost = () => {
 		const res: any = await API.get('/user')
 		setPostsList(res.data.data.Posts)
 		setCategory(res.data.data.Categories)
-		console.log(res.data.data.Posts)
+		console.log('res',res.data.data)
 	}
 	
 	useEffect(() => {
-	FirstRender()
+		FirstRender()
 	}, [])
 
 	// * 검색
@@ -83,13 +84,14 @@ const MyPost = () => {
 		// setCategory(e.currentTarget.value)
 		try {
 			const res: any = await API.get('/user')
-          setPostsList(res.data.data);			
+            setPostsList(res.data.data.Posts);			
 		} catch (error) {
 			
 		}
 	}
 
 	const getCategoryPosts = async(id) => {
+		console.log('iddddd', id)
 		try {
 		const res: any = await API.get(`/posts/category/${id}`)
 		setPostsList(res.data.data)
@@ -98,6 +100,10 @@ const MyPost = () => {
 			console.error("에러", error)
 		}
 	}
+
+	if (!postsList || !category) {
+		return <></>
+	  }
 
 	return (
 		<Container>
@@ -114,7 +120,7 @@ const MyPost = () => {
 						<button value={"All"} onClick={(e) => handleCategory(e)}>All</button>
 					}
 					{
-						category && category.map((post, idx) => {
+						category.map((post, idx) => {
 							return (
 								<button value={post.name} onClick={e => getCategoryPosts(post.id)}>
 									{post.name}
@@ -125,16 +131,16 @@ const MyPost = () => {
 				</SideDiv>
 				<MainDiv>
 				{
-					postsList && postsList.map((post, idx) => {
+					postsList?.map((post, idx) => {
 						return (
 							<ContentDiv key={post.id}>
 								<HeaderWrap>
-									<PostRouter link={post.id} title={post.title} />
+									<PostRouter link={`/posts/${post.id}`} title={post.title} />
 									<div>{post.summary}</div>
 								</HeaderWrap>
 								<FooterWrap>
 									<div>작성일 : {post.createdAt.split('T')[0]}</div>
-									<div>좋아요 : {post.Likers}</div>
+									<div>좋아요 : {post.Likers?.length}</div>
 									<div>조회수 : {post.views}</div>
 								</FooterWrap>
 							</ContentDiv>

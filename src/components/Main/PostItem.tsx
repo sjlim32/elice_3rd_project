@@ -5,7 +5,7 @@ import Image from "next/image"
 
 
 const PostItem = (props :PostType) => {
-    console.log('props', props)
+    // console.log('props', props)
 return(
     <PostItemWrapper>
         <Detail>

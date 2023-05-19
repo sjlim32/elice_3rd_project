@@ -25,7 +25,7 @@ export const PostItemWrapper = styled.div`
 
 
 export const Detail = styled.div`
-flex-grow:1;
+    flex-grow:1;
 `
 
 export const UserInfoAndTime = styled.div`
@@ -38,6 +38,9 @@ div {
     span {
         margin-left: 5px;
     }
+}
+p {
+    font-size:0.8rem;
 }
 `
 
