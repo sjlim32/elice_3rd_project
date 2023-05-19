@@ -54,7 +54,7 @@ const RecentPosts = () => {
                     </p>
                 }
                 >
-            {/* <Box sx={{ flexGrow: 1 }}> */}
+            <Box sx={{ flexGrow: 1 }}>
               <Grid container spacing={5}>
                       {posts.map((item, index) => (
                         <Grid item xs={12} sm={6} md={4} lg={3} key={index} onClick={()=>goToDetail(item.id)}>
@@ -62,7 +62,7 @@ const RecentPosts = () => {
                         </Grid>                 
                       ))}
               </Grid>
-            {/* </Box> */}
+            </Box>
         </InfiniteScroll>
       </PostListContainer>  
     )

@@ -114,6 +114,11 @@ export default function Posts() {
     }
   }, [router]);
 
+
+  useEffect(()=>{
+    console.log('cId', IsEditingCommentId, typeof IsEditingCommentId)
+  },[IsEditingCommentId])
+
   const getPost = async (id: string) => {
     const response = await api.get(`/posts/${id}`);
     const data = response.data?.data
@@ -175,10 +180,14 @@ export default function Posts() {
     }
   };
 
-  const updateComment = async (commentId: string, data: string)=>{
+  const updateComment = async (e, commentId: string, data: string)=>{
+    e.preventDefault()
+console.log('updata', {commentId, data})
+
     try {
-        await api.patch(`/comments/${commentId}`, data);
-        window.location.reload()
+        const res = await api.patch(`/comments/${commentId}`, {content: data});
+        // window.location.reload()
+        console.log('res', res)
     } catch (error : any) {
         alert(error);
     }
@@ -240,7 +249,7 @@ export default function Posts() {
               </div>
             </CommentAuthor>
             {IsEditingCommentId === comment.id ? (
-              <UpdateCommentForm onSubmit={() => updateComment(String(comment.id), EditingComment)}>
+              <UpdateCommentForm onSubmit={(e) => updateComment(e, String(comment.id), EditingComment)}>
                 <UpdateComment 
                   placeholder={comment.content} 
                   value={EditingComment} 
