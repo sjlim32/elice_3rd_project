@@ -79,7 +79,10 @@ const Header = () => {
           />
         )}
         {isLoggedIn ? (
-          <LogIn onClick={() => signOut(auth)}>Logout</LogIn>
+          <>
+            <LogIn onClick={() => signOut(auth)}>Logout</LogIn>
+            <LinkWrapper href={'/my-user'}>My Page</LinkWrapper>
+          </>
         ) : (
           <>
             <LinkWrapper href={'/login'}>Login</LinkWrapper>

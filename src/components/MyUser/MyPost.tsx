@@ -45,15 +45,17 @@ const postsMockList: any[] = [{
 
 const MyPost = () => {
 	const [postsList, setPostsList] = useState(postsMockList)
-	const [category, setCategory] = useState<string>('All')
+	const [category, setCategory] = useState<any>()
 	const search: any = useRef('')
 
 	// * 최초 게시글 목록 렌더
 	const FirstRender = async () => {
-		const res: any = await API.get('/posts')
-		setPostsList(res.data.data)
+		const res: any = await API.get('/user')
+		setPostsList(res.data.data.Posts)
+		setCategory(res.data.data.Categories)
+		console.log(res.data.data.Posts)
 	}
-
+	
 	useEffect(() => {
 	FirstRender()
 	}, [])
@@ -65,8 +67,8 @@ const MyPost = () => {
 
 	const handleSearch = async() => {
 		try {
-			const res: any = await API.get('/posts')
-			const searchingPosts = await res.data.data.filter(post=>
+			const res: any = await API.get('/user')
+			const searchingPosts = await res.data.data.Posts.filter(post=>
             post.title.includes(search.current)
           );
           setPostsList(searchingPosts);
@@ -77,25 +79,25 @@ const MyPost = () => {
 
 	// * 카테고리 설정
 
-	const handleCategory = (e: MouseEvent<HTMLButtonElement>) => {
-		setCategory(e.currentTarget.value)
+	const handleCategory = async(e: MouseEvent<HTMLButtonElement>) => {
+		// setCategory(e.currentTarget.value)
+		try {
+			const res: any = await API.get('/user')
+          setPostsList(res.data.data);			
+		} catch (error) {
+			
+		}
 	}
 
-	const getCategoryPosts = async() => {
+	const getCategoryPosts = async(id) => {
 		try {
-		const res: any = await API.get(`/api/v1//posts/category/:${category}`)
-		setPostsList(res.data)
-			console.log(category)
+		const res: any = await API.get(`/posts/category/${id}`)
+		setPostsList(res.data.data)
+			console.log(res.data.data)
 		} catch (error) {
 			console.error("에러", error)
 		}
 	}
-
-	useEffect(() => {
-		category === 'All'
-		? FirstRender()
-		: getCategoryPosts()
-	}, [category])
 
 	return (
 		<Container>
@@ -112,10 +114,10 @@ const MyPost = () => {
 						<button value={"All"} onClick={(e) => handleCategory(e)}>All</button>
 					}
 					{
-						postsList.map((post, idx) => {
+						category && category.map((post, idx) => {
 							return (
-								<button value={post.category} onClick={(e) => handleCategory(e)}>
-									{post.category}
+								<button value={post.name} onClick={e => getCategoryPosts(post.id)}>
+									{post.name}
 								</button>
 							)
 						})
@@ -123,17 +125,16 @@ const MyPost = () => {
 				</SideDiv>
 				<MainDiv>
 				{
-					postsList.map((post, idx) => {
+					postsList && postsList.map((post, idx) => {
 						return (
 							<ContentDiv key={post.id}>
 								<HeaderWrap>
-									<PostThumbnail alt={'썸네일'}></PostThumbnail>
 									<PostRouter link={post.id} title={post.title} />
 									<div>{post.summary}</div>
 								</HeaderWrap>
 								<FooterWrap>
 									<div>작성일 : {post.createdAt.split('T')[0]}</div>
-									<div>카테고리 : {post.category}</div>
+									<div>좋아요 : {post.Likers}</div>
 									<div>조회수 : {post.views}</div>
 								</FooterWrap>
 							</ContentDiv>

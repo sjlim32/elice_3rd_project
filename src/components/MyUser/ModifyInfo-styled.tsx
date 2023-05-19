@@ -57,7 +57,7 @@ export const InputTitle = styled.h2`
 export const Input = styled.input`
 
 	width: 80%;
-	margin: 1rem;
+	margin: 0.5rem;
 
 	border: 0;
 	border-bottom: 1px solid;
