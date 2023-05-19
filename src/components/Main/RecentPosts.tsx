@@ -1,21 +1,13 @@
 import { useState, useEffect } from 'react';
-import { RecentPostsWrapper, RecentPost, RecentPostItem } from './recentPosts-styled';
 import * as API from '@/utils/api';
-import {convertCreatedAt} from '@/utils/util';
 import InfiniteScroll from 'react-infinite-scroll-component';
-
-interface Data{
-    title: string;
-    content: string;
-    summary: string;
-    views: number;
-    User: {nickname: string};
-    createdAt: string;
-    Likers: {nickname:string}[]
-}
+import { PostListContainer, } from './posts-styled';
+import { Grid,Box } from '@mui/material';
+import { PostType } from '@/types/getTypes';
+import PostItem from './PostItem';
 
 const RecentPosts = () => {
-    const [posts, setPosts] = useState<Data[]>([]);
+    const [posts, setPosts] = useState<PostType[]>([]);
     const [hasMore, setHasMore] = useState<boolean>(true);
     const [page, setPage] = useState(0); // 페이지 번호를 저장하는 상태
 
@@ -41,32 +33,29 @@ const RecentPosts = () => {
 
 
     return (
-            <>            
-                <InfiniteScroll
+        <PostListContainer>
+        <InfiniteScroll
                 dataLength={posts.length}
                 next={() => loadPosts(page + 1)}
                 hasMore={hasMore}
                 loader={<h3>로딩중...</h3>}
                 endMessage={
                     <p style={{textAlign: 'center'}}>
-                        <b>끝!</b>
+                        <b>마지막 게시물</b>
                     </p>
                 }
                 >
-                    {posts.map((item, index) => (
-                    <RecentPostsWrapper >                           
-                            <RecentPost key={index}>
-                                <RecentPostItem><h3>{item.title}</h3></RecentPostItem>
-                                <RecentPostItem className='summary'>{item.summary}</RecentPostItem>                                                              
-                                <RecentPostItem className='view'>조회수: {item.views}회</RecentPostItem>
-                                <RecentPostItem className='liker'>좋아요: {item.Likers.length}</RecentPostItem>
-                                <RecentPostItem className='date'>{convertCreatedAt(item.createdAt)}</RecentPostItem>                                
-                                <RecentPostItem className='user'>by <div>{item.User.nickname}</div></RecentPostItem>
-                            </RecentPost>
-                    </RecentPostsWrapper>
-                    ))}
-                </InfiniteScroll>
-            </>
+        <Box sx={{ flexGrow: 1 }}>
+              <Grid container spacing={5}>
+                      {posts.map((item, index) => (
+                        <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+                        <PostItem {...item} />
+                        </Grid>                 
+                      ))}
+              </Grid>
+            </Box>
+        </InfiniteScroll>
+      </PostListContainer>  
     )
 }
 

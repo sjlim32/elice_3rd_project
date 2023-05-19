@@ -6,6 +6,8 @@ export const GlobalStyle = createGlobalStyle`
   body {
   	line-height: 1;
     font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    padding: 0;
   }
 
   html,
@@ -14,6 +16,7 @@ export const GlobalStyle = createGlobalStyle`
   *::after {
     box-sizing: border-box;
     font-family: 'Noto Sans KR', sans-serif;
+    padding: 0;
   }
 
   a {

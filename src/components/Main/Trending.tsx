@@ -1,23 +1,18 @@
 import { useState, useEffect } from 'react';
-import { TrendingPostsWrapper, TrendingPost, TrendingPostItem } from './trending-styled';
+import { PostListContainer, } from './posts-styled';
+import { Grid,Box } from '@mui/material';
+import { PostType } from '@/types/getTypes';
+import PostItem from './PostItem';
 import * as API from '@/utils/api';
-import {convertCreatedAt} from '@/utils/util';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useRouter } from 'next/router';
 
-interface Data{
-  title: string;
-  content: string;
-  summary: string;
-  views: number;
-  User: {nickname: string};
-  createdAt: string;
-  Likers: {nickname:string}[]
-}
 
 const Trending = () => {
-  const [posts, setPosts] = useState<Data[]>([]);
+  const [posts, setPosts] = useState<PostType[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [page, setPage] = useState(0); // 페이지 번호를 저장하는 상태
+  const router = useRouter()
   
   useEffect(() => {
     loadPosts(1);
@@ -37,8 +32,12 @@ const Trending = () => {
     setPage(prevPage => prevPage + 1); // 다음 페이지로 이동
   }
 
+  const goToDetail = (id) => {
+    router.push(`/posts/${id}`)
+  }
+
   return (
-      <>
+      <PostListContainer>
         <InfiniteScroll
                 dataLength={posts.length}
                 next={() => loadPosts(page + 1)}
@@ -46,24 +45,21 @@ const Trending = () => {
                 loader={<h3>로딩중...</h3>}
                 endMessage={
                     <p style={{textAlign: 'center'}}>
-                        <b>끝!</b>
+                        <b>마지막 게시물</b>
                     </p>
                 }
                 >
-                    {posts.map((item, index) => (
-                    <TrendingPostsWrapper >                           
-                            <TrendingPost key={index}>
-                                <TrendingPostItem><h3>{item.title}</h3></TrendingPostItem>
-                                <TrendingPostItem className='summary'>{item.summary}</TrendingPostItem>                                                              
-                                <TrendingPostItem className='view'>조회수: {item.views}회</TrendingPostItem>
-                                <TrendingPostItem className='liker'>좋아요: {item.Likers.length}</TrendingPostItem>
-                                <TrendingPostItem className='date'>{convertCreatedAt(item.createdAt)}</TrendingPostItem>                                
-                                <TrendingPostItem className='user'>by <div>{item.User.nickname}</div></TrendingPostItem>
-                            </TrendingPost>
-                    </TrendingPostsWrapper>
-                    ))}
+             <Box sx={{ flexGrow: 1 }}>
+                <Grid container spacing={5}>
+                        {posts.map((item, index) => (
+                          <Grid item xs={12} sm={6} md={4} lg={3} key={index} onClick={()=>goToDetail(item.id)}>
+                              <PostItem {...item} />
+                          </Grid>                 
+                        ))}
+                </Grid>
+            </Box>
         </InfiniteScroll>
-      </>      
+      </PostListContainer>      
   );
 };
 
