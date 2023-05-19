@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { RecentPostsWrapper, RecentPost, RecentPostItem } from './recentPosts-styled';
+import { PostsWrapper, Post, PostItem } from './posts-styled';
 import * as API from '@/utils/api';
 import {convertCreatedAt} from '@/utils/util';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Grid } from '@mui/material';
 
 interface Data{
     title: string;
@@ -49,22 +50,26 @@ const RecentPosts = () => {
                 loader={<h3>로딩중...</h3>}
                 endMessage={
                     <p style={{textAlign: 'center'}}>
-                        <b>끝!</b>
+                        <b>마지막 게시물</b>
                     </p>
                 }
                 >
-                    {posts.map((item, index) => (
-                    <RecentPostsWrapper >                           
-                            <RecentPost key={index}>
-                                <RecentPostItem><h3>{item.title}</h3></RecentPostItem>
-                                <RecentPostItem className='summary'>{item.summary}</RecentPostItem>                                                              
-                                <RecentPostItem className='view'>조회수: {item.views}회</RecentPostItem>
-                                <RecentPostItem className='liker'>좋아요: {item.Likers.length}</RecentPostItem>
-                                <RecentPostItem className='date'>{convertCreatedAt(item.createdAt)}</RecentPostItem>                                
-                                <RecentPostItem className='user'>by <div>{item.User.nickname}</div></RecentPostItem>
-                            </RecentPost>
-                    </RecentPostsWrapper>
-                    ))}
+                    <Grid container spacing={2}>
+                        {posts.map((item, index) => (
+                            <PostsWrapper>
+                                <Grid item xs={12} sm={6} md={5}>                                                            
+                                        <Post key={index}>
+                                            <PostItem><h3>{item.title}</h3></PostItem>
+                                            <PostItem className='summary'>{item.summary}</PostItem>                                                              
+                                            <PostItem className='view'>조회수: {item.views}회</PostItem>
+                                            <PostItem className='liker'>좋아요: {item.Likers.length}</PostItem>
+                                            <PostItem className='date'>{convertCreatedAt(item.createdAt)}</PostItem>                                
+                                            <PostItem className='user'>by <div>{item.User.nickname}</div></PostItem>
+                                        </Post>                                
+                                </Grid>
+                            </PostsWrapper>                        
+                        ))}
+                    </Grid>                    
                 </InfiniteScroll>
             </>
     )
