@@ -13,11 +13,13 @@ import {
 import { useState, useEffect } from 'react';
 import auth from './auth';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
+import * as API from '@/utils/api';
 
 const Header = () => {
   const [isSearchVisible, setIsSearchVisible] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>('');
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   const handleClick = (): void => {
     setIsSearchVisible(show => !show);
@@ -37,12 +39,18 @@ const Header = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       if (user) {
+        console.log(user);
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
       }
     });
+    const checkAdmin = async () => {
+      const res: any = await API.get<any>('/user');
+      setIsAdmin(res.data.data.admin);
+    };
 
+    checkAdmin();
     return () => {
       unsubscribe();
     };
@@ -82,6 +90,13 @@ const Header = () => {
           <>
             <LogIn onClick={() => signOut(auth)}>Logout</LogIn>
             <LinkWrapper href={'/my-user'}>My Page</LinkWrapper>
+            {isAdmin ? (
+              <>
+                <LinkWrapper href={'/admin'}>Admin Page</LinkWrapper>
+              </>
+            ) : (
+              <></>
+            )}
           </>
         ) : (
           <>
