@@ -6,21 +6,22 @@ import {
 } from './category-styled';
 import CategoryItem from './CategoryItem';
 import CategoryModal from './CategoryModal';
-import { categoryType } from '@/types/category';
+import { CategoryType } from '@/types/getTypes';
+import { CategoryFormType } from '@/types/formTypes';
 
 const Category = () => {
-  const [dummyCategory, setDummyCategory] = useState<categoryType[]>([
+  const [dummyCategory, setDummyCategory] = useState<CategoryType[]>([
     { id: '1', name: '카테고리1' },
     { id: '2', name: '카테고리2' },
     { id: '3', name: '카테고리3' },
   ]);
   const [isModalOpened, setIsModalOpened] = useState(false);
-  const [categoryItem, setCategoryItem] = useState<categoryType>({
+  const [categoryItem, setCategoryItem] = useState<CategoryType>({
     id: '',
     name: '',
   });
 
-  const handleCategoryItem = (item: categoryType) => {
+  const handleCategoryItem = (item: CategoryType) => {
     setCategoryItem(item);
   };
 
@@ -54,7 +55,7 @@ const Category = () => {
         <input
           type="text"
           ref={categoryRef}
-          placeholder="카테고리를 입력하세요"
+          placeholder="카테고리 추가"
           required
         />
         <button>추가</button>

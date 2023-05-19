@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const CategoryContainer = styled.main`
-  max-width: 720px;
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
   h1 {
@@ -30,6 +30,7 @@ export const CategoryFormWrapper = styled.form`
 export const CategoryItemWrapper = styled.ul`
   display: flex;
   flex-direction: column;
+  padding: 0;
 `;
 
 export const CategoryItemContainer = styled.li`

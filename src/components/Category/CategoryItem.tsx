@@ -4,10 +4,11 @@ import {
   CategoryName,
   CategoryButtonContainer,
 } from './category-styled';
-import { categoryType } from '@/types/category';
+import { CategoryType } from '@/types/getTypes';
+import { CategoryFormType } from '@/types/formTypes';
 
 interface Props {
-  category: categoryType;
+  category: CategoryType;
   onCategoryItemChange: (item: Props['category']) => void;
   onModalOpenedChange: (isOpened: boolean) => void;
 }
