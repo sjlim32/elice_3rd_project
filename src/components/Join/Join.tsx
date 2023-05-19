@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import axios from 'axios';
 import {
   Container,
   Form,
@@ -40,9 +39,7 @@ const Join = () => {
     // 회원가입 로직 구현
 
     try {
-      const response = await axios.post(
-        'http://localhost:3001/api/v1/auth/join',
-        signupData,
+      const response = await API.post('/auth/join', signupData,
         {
           timeout: 10000, // 10초 시간 제한 설정
         }
