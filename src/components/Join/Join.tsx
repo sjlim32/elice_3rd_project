@@ -40,13 +40,9 @@ const Join = () => {
     // 회원가입 로직 구현
 
     try {
-      const response = await axios.post(
-        'http://localhost:3001/api/v1/auth/join',
-        signupData,
-        {
-          timeout: 10000, // 10초 시간 제한 설정
-        }
-      );
+      const response = await API.post('/auth/join', signupData, {
+        timeout: 10000, // 10초 시간 제한 설정
+      });
       console.log(response);
     } catch (error) {
       console.error(error);

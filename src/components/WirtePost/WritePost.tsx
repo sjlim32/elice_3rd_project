@@ -26,8 +26,8 @@ import { Editor, IAllProps as EditorProps } from '@tinymce/tinymce-react';
 import { Editor as TinyMCEEditor } from 'tinymce';
 import * as API from '@/utils/api';
 import { getUserInfo } from '@/utils/util';
-import { CategoryType } from '@/types/getTypes';
-import { CategoryFormType } from '@/types/formTypes';
+import { CategoryType, PostType } from '@/types/getTypes';
+import { CategoryFormType, PostFormType } from '@/types/formTypes';
 import axios from 'axios';
 
 const EditorDynamic = dynamic(() => import('./Editor'), {
@@ -51,7 +51,7 @@ interface Option {
 }
 
 const WritePost = ({ isEdit }: Props) => {
-  const [editContent, setEditContent] = useState<string>('');
+  const [post, setPost] = useState<PostType>(null);
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [selectedOption, setSelectedOption] = useState<Option | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -65,11 +65,10 @@ const WritePost = ({ isEdit }: Props) => {
     console.log('edit', isEdit);
     if (router.isReady && isEdit) {
       const { id } = router.query;
-      console.log('id', id);
+      id && getPost(id);
       setPostId(id);
-
-      titleRef.current && (titleRef.current.value = '수정 타이틀' + id);
-      setEditContent('edit');
+      // titleRef.current && (titleRef.current.value = '수정 타이틀' + id);
+      // setEditContent('edit');
     }
   }, [router, isEdit]);
 
@@ -84,6 +83,22 @@ const WritePost = ({ isEdit }: Props) => {
     setSelectedOption({ id: selected?.id, value: selected?.name });
     console.log('selectedOption', selectedOption);
   };
+
+  const getPost = async (id: string) => {
+    const response = await API.get<PostType>(`/posts/${id}`);
+    console.log('category response : ', response.status);
+    setPost(response.data.data);
+  };
+
+  useEffect(() => {
+    if (post) {
+      titleRef.current && (titleRef.current.value = post.title);
+      summaryRef.current && (summaryRef.current.value = post.summary);
+      if (post.Category) {
+        setSelectedOption({ id: post.Category.id, value: post.Category.name });
+      }
+    }
+  }, [post]);
 
   const getCategories = async () => {
     const response = await API.get<CategoryType>('/categories');
@@ -154,8 +169,13 @@ const WritePost = ({ isEdit }: Props) => {
     console.log('summary : ', summary);
     console.log('option : ', selectedOption);
 
+    // const data = { title, content, summary };
+    // if(selectedOption) {
+    //   data.categoryId
+    // }
+
     if (mode === 'edit') {
-      const response = API.patch<CategoryFormType>('/posts', {
+      const response = await API.patch<PostFormType>(`/posts/${postId}`, {
         title,
         content,
         summary,
@@ -164,7 +184,7 @@ const WritePost = ({ isEdit }: Props) => {
       console.log('post response : ', response);
     }
     if (mode === 'create') {
-      const response = API.post<CategoryFormType>('/posts', {
+      const response = await API.post<PostFormType>('/posts', {
         title,
         content,
         summary,
@@ -174,9 +194,11 @@ const WritePost = ({ isEdit }: Props) => {
     }
   };
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (confirm('게시글을 삭제하시겠습니까?')) {
-      console.log('게시글 삭제');
+      const response = await API.delete<PostFormType>(`/posts/${postId}`);
+      console.log('delete response : ', response);
+      router.push(`/`);
     }
   };
 
@@ -193,7 +215,7 @@ const WritePost = ({ isEdit }: Props) => {
             onChange={handleSelectChange}
           >
             <option value="" className="defaultSelect">
-              카테고리 선택
+              ---카테고리---
             </option>
             {categories &&
               categories?.map(option => (
@@ -263,7 +285,7 @@ const WritePost = ({ isEdit }: Props) => {
           onInit={(evt, editor) => {
             contentRef.current = editor;
           }}
-          initialValue={editContent || ''}
+          initialValue={post?.content || ''}
           init={{
             height: '100%',
             placeholder: '내용을 입력하세요',

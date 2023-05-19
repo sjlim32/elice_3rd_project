@@ -20,9 +20,10 @@ export const CategoryFormWrapper = styled.form`
 
   input {
     flex-grow: 1;
-    border: none;
-    border-bottom: 1px solid #d9d9d9;
+    border: 1px solid #d9d9d9;
+    border-radius: 10px;
     font-size: 1rem;
+    padding: 5px;
   }
   margin-bottom: 20px;
 `;
@@ -39,6 +40,14 @@ export const CategoryItemContainer = styled.li`
   justify-content: space-between;
   align-items: center;
   margin: 7px 0;
+
+  input {
+    border: none;
+    flex-grow: 1;
+    background-color: #eee;
+    padding: 7px 5px;
+    border-radius: 10px;
+  }
 `;
 export const CategoryName = styled.p``;
 export const CategoryButtonContainer = styled.div`
@@ -84,4 +93,16 @@ export const CloseModalButton = styled.button`
   right: 0;
   top: 0;
 `;
-export const SubmitEditButton = styled.button``;
+export const SubmitEditButton = styled.button`
+  border: none;
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin-left: 15px;
+`;
+export const AddButton = styled(SubmitEditButton)`
+  border: none;
+  padding: 5px 10px;
+  border-radius: 10px;
+  margin-left: 15px;
+  background-color: #aec3b0;
+`;
