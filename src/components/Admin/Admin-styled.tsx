@@ -7,13 +7,14 @@ interface InnerScreen {
 export const AdminBox = styled.div`
   width: 80%;
   height: 400px;
-  margin: 0 auto;
+  margin: 4rem auto;
   background-color: white;
   border-radius: 20px;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border: 1px solid #ccc;
+  box-shadow: 2px 4px 4px 0px rgba(0, 0, 0, 0.25);
   text-align: center;
 `;
 
@@ -44,19 +45,20 @@ export const Title = styled.div`
 `;
 
 export const AdminContainer = styled.main`
-  max-width: 1140px;
+  max-width: 1300px;
+  width: 90%;
   height: 100vh;
   margin: 0 auto;
   padding: 0 20px;
 `;
 export const UserContainer = styled.main`
-  width: 80%;
+  width: 100%;
   height: auto;
   margin: 0 auto;
   padding: 0 20px;
 `;
 export const PostContainer = styled.main`
-  width: 80%;
+  width: 100%;
   height: auto;
   margin: 0 auto;
   padding: 0 20px;
@@ -92,4 +94,8 @@ export const TableRow = styled.div`
 
 export const TableCell = styled.span<InnerScreen>`
   width: ${(props: any) => props.width};
+  line-height: 20px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;

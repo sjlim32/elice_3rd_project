@@ -39,18 +39,17 @@ const Header = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       if (user) {
-        console.log(user);
+        const checkAdmin = async () => {
+          const res: any = await API.get<any>('/user');
+          setIsAdmin(res.data.data.admin);
+        };
+        checkAdmin();
         setIsLoggedIn(true);
       } else {
         setIsLoggedIn(false);
       }
     });
-    const checkAdmin = async () => {
-      const res: any = await API.get<any>('/user');
-      setIsAdmin(res.data.data.admin);
-    };
 
-    checkAdmin();
     return () => {
       unsubscribe();
     };
