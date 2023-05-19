@@ -198,7 +198,7 @@ export default function Posts() {
           {Postdata.views} views{' · '}
           {Isliked ?
             <span onClick={deleteLike} style={{ color: 'pink', cursor: 'pointer'}}>{Postdata.Likers.length} ♥</span> :
-            <span onClick={addLike}>{Postdata.Likers.length} ♡</span>
+            <span onClick={addLike} style={{ cursor: 'pointer'}}>{Postdata.Likers.length} ♡</span>
           }
         </span>
         {user?.displayName == Postdata.User.nickname ? (
