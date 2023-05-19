@@ -11,11 +11,11 @@ const api = axios.create({
 let userReadyPromise: Promise<User | null>;
 
 const getUser = async (): Promise<User | null> => {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     if (auth.currentUser) {
       resolve(auth.currentUser);
     } else {
-      auth.onAuthStateChanged((user) => {
+      auth.onAuthStateChanged(user => {
         resolve(user);
       });
     }
@@ -24,16 +24,19 @@ const getUser = async (): Promise<User | null> => {
 
 userReadyPromise = getUser();
 
-api.interceptors.request.use(async (config) => {
-  const user = await userReadyPromise;
-  if (user) {
-    const idToken = await user.getIdToken(true);
-    config.headers['Authorization'] = `Bearer ${idToken}`;
+api.interceptors.request.use(
+  async config => {
+    const user = await userReadyPromise;
+    if (user) {
+      const idToken = await user.getIdToken(true);
+      config.headers['Authorization'] = `Bearer ${idToken}`;
+    }
+    return config;
+  },
+  error => {
+    return Promise.reject(error);
   }
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
+);
 
 interface CustomAxiosResponse<T> extends AxiosResponse<T> {
   error?: string | null;

@@ -8,33 +8,37 @@ import {
   SearchUI,
   SearchInput,
   SearchButton,
+  WriteButton,
   LogIn,
 } from './header-styled';
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import auth from './auth';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import * as API from '@/utils/api';
+import { useRouter } from 'next/router';
 
 const Header = () => {
   const [isSearchVisible, setIsSearchVisible] = useState<boolean>(false);
   const [searchInput, setSearchInput] = useState<string>('');
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const router = useRouter();
 
-  const handleClick = (): void => {
-    setIsSearchVisible(show => !show);
-  };
+  // const handleClick = (): void => {
+  //   setIsSearchVisible(show => !show);
+  // };
 
-  const handleSearchInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void => {
-    setSearchInput(event.target.value);
-  };
+  // const handleSearchInputChange = (
+  //   event: React.ChangeEvent<HTMLInputElement>
+  // ): void => {
+  //   setSearchInput(event.target.value);
+  // };
 
-  const submitSearch = () => {
-    console.log('검색어', searchInput);
-    setIsSearchVisible(false);
-  };
+  // const submitSearch = () => {
+  //   console.log('검색어', searchInput);
+  //   setIsSearchVisible(false);
+  // };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
@@ -55,6 +59,11 @@ const Header = () => {
     };
   }, []);
 
+  const handleLogout = () => {
+    signOut(auth);
+    router.replace('/');
+  };
+
   return (
     <HeaderWrapper>
       <Home href={'/'}>
@@ -62,21 +71,12 @@ const Header = () => {
       </Home>
 
       <Nav>
-        {isSearchVisible ? (
-          <div
-            className={`${SearchUI.search} ${
-              isSearchVisible ? SearchUI.show : SearchUI.hide
-            }`}
-          >
-            <SearchInput
-              type="text"
-              placeholder="검색어를 입력하세요"
-              value={searchInput}
-              onChange={handleSearchInputChange}
-            />
-            <SearchButton onClick={submitSearch}>Search</SearchButton>
-          </div>
-        ) : (
+        {/* <form
+          onSubmit={submitSearch}
+          className={`${SearchUI.search} ${
+            isSearchVisible ? SearchUI.show : SearchUI.hide
+          }`}
+        >
           <Search
             src="/images/Search.png"
             alt="검색"
@@ -84,17 +84,41 @@ const Header = () => {
             height="30"
             onClick={handleClick}
           />
-        )}
+          {isSearchVisible ? (
+            <SearchInput
+              type="text"
+              placeholder="검색어를 입력하세요"
+              value={searchInput}
+              onChange={handleSearchInputChange}
+            />
+          ) : null}
+        </form> */}
         {isLoggedIn ? (
           <>
-            <LogIn onClick={() => signOut(auth)}>Logout</LogIn>
-            <LinkWrapper href={'/my-user'}>My Page</LinkWrapper>
+            <LogIn onClick={handleLogout}>Logout</LogIn>
             {isAdmin ? (
-              <>
-                <LinkWrapper href={'/admin'}>Admin Page</LinkWrapper>
-              </>
+              <LinkWrapper href={'/admin'}>
+                <Image
+                  src="/images/Admin.png"
+                  alt="관리자"
+                  width="32"
+                  height="32"
+                />
+              </LinkWrapper>
             ) : (
-              <></>
+              <>
+                <LinkWrapper href={'/write'}>
+                  <WriteButton>Write</WriteButton>
+                </LinkWrapper>
+                <LinkWrapper href={'/my-user'}>
+                  <Image
+                    src="/images/User.png"
+                    alt="마이페이지"
+                    width="32"
+                    height="32"
+                  />
+                </LinkWrapper>
+              </>
             )}
           </>
         ) : (
